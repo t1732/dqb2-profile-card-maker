@@ -5,11 +5,10 @@ v-app(dark)
   v-content
     v-container
       nuxt
+    .mb-3
+      credit
   v-footer(app color="secondary" height="auto")
     v-card.footerCard.text-xs-center(flat tile)
-      v-card-text
-        credit
-      v-divider
       v-card-text.text-xs-center(v-html="copylight")
 </template>
 
