@@ -83,5 +83,8 @@ dist
 # Service worker
 sw.*
 
+# firebase cache
+.firebase/*
+
 # ignore image
 assets/image/*
