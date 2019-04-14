@@ -1,7 +1,8 @@
+import NuxtConfiguration from '@nuxt/config'
 import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
-import pkg from './package'
+const pkg = require('./package.json')
 
-export default {
+const config: NuxtConfiguration = {
   mode: 'spa',
 
   /*
@@ -19,7 +20,7 @@ export default {
       {
         rel: 'stylesheet',
         href:
-          'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'
+        'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'
       }
     ]
   },
@@ -67,3 +68,5 @@ export default {
     }
   }
 }
+
+export default config
