@@ -7,21 +7,20 @@ v-layout(column justify-center align-center)
       :label="selectorLabel"
       outline)
   v-flex(xs12 sm8 md6)
-    sheet(:image="select" :width="sheetWidth" :height="sheetHeight")
+    sheet(
+      :image="select"
+      :scale="scale"
+      :width="profileCardImageSize.width"
+      :height="profileCardImageSize.heith")
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
+
 const profileCard_F = require('~/assets/image/DQB2CHARA_F.jpg')
 const profileCard_M = require('~/assets/image/DQB2CHARA_M.jpg')
-
 const width: number = window.innerWidth
 const height: number = window.innerHeight
-const defaultProfileCardImageSize: {[s: string]: number} = {
-  width: 800,
-  height: 1200
-}
-const imageMargin: number = 30
 
 @Component({
   components: {
@@ -35,18 +34,17 @@ export default class Index extends Vue {
     { value: profileCard_F, text: "じこしょうかい(♀)" },
     { value: profileCard_M, text: "じこしょうかい(♂)" }
   ]
+  profileCardImageSize: {[s: string]: number} = {
+    width: 800,
+    height: 1200
+  }
+  imageMargin: number = 30
 
   get scale(): number {
-    if (defaultProfileCardImageSize.width <= width)
+    if (this.profileCardImageSize.width <= width)
       return 1.0
     else
-      return (width - (imageMargin * 2)) / defaultProfileCardImageSize.width
-  }
-  get sheetWidth(): number {
-    return defaultProfileCardImageSize.width * this.scale
-  }
-  get sheetHeight(): number {
-    return defaultProfileCardImageSize.height * this.scale
+      return (width - (this.imageMargin * 2)) / this.profileCardImageSize.width
   }
 }
 </script>
