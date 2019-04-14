@@ -12,8 +12,10 @@
   },
   "dependencies": {
     "cross-env": "^5.2.0",
+    "konva": "^3.2.4",
     "nuxt": "^2.4.0",
     "ts-node": "^8.0.3",
+    "vue-konva": "^2.0.4",
     "vue-property-decorator": "^8.1.0",
     "vuetify": "^1.5.5",
     "vuetify-loader": "^1.2.1"
