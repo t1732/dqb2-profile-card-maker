@@ -54,8 +54,10 @@ export default class Credit extends Vue {
       x: 270 * this.scale,
       y: 145 * this.scale,
       fontSize: 28 * this.scale,
+      fontFamily: 'Nico Moji',
       text: 'ニックネーム'
     }
+    // M PLUS, Sawarabi Gothic, Noto Sans JP, Kosugi, Kosugi Maru, Nico Moji
   }
 
   mounted() {

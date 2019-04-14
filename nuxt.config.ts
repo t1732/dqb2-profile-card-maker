@@ -19,8 +19,15 @@ const config: NuxtConfiguration = {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
-        href:
-        'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'
+        href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons',
+      },
+      { // M PLUS, Sawarabi Gothic, Noto Sans JP, Kosugi, Kosugi Maru
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/css?family=M+PLUS+1p|Sawarabi+Gothic|Noto+Sans+JP|Kosugi|Kosugi+Maru'
+      },
+      { // Nico Moji
+        rel: 'stylesheet',
+        href: 'https://fonts.googleapis.com/earlyaccess/nicomoji.css'
       }
     ]
   },
