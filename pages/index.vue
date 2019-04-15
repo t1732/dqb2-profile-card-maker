@@ -11,10 +11,12 @@ v-layout(column justify-center align-center)
       :image="select"
       :scale="scale"
       :width="profileCardImageSize.width"
-      :height="profileCardImageSize.heith")
+      :height="profileCardImageSize.heith"
+      @changed="onChangedSheet")
 </template>
 
 <script lang="ts">
+import { mapActions } from 'vuex'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 
 const profileCard_F = require('~/assets/image/DQB2CHARA_F.jpg')
@@ -25,6 +27,11 @@ const height: number = window.innerHeight
 @Component({
   components: {
     Sheet: () => import('~/components/Sheet.vue')
+  },
+  methods: {
+    ...mapActions({
+      onChangedSheet: 'sheet/onChanged'
+    })
   }
 })
 export default class Index extends Vue {

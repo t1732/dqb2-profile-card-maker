@@ -11,14 +11,22 @@ v-app(dark)
     v-card.footerCard.text-xs-center(flat tile)
       v-card-text.text-xs-center.pt-2.pb-1(v-html="credit_1")
       v-card-text.text-xs-center.pb-2.pt-0(v-html="credit_2")
+      download-button(@click="download")
 </template>
 
 <script lang="ts">
+import { mapActions } from 'vuex'
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
   components: {
+    DownloadButton: () => import('~/components/DownloadButton.vue'),
     Lisence: () => import('~/components/Lisence.vue')
+  },
+  methods: {
+    ...mapActions({
+      download: 'sheet/download'
+    })
   }
 })
 export default class Default extends Vue {

@@ -48,6 +48,8 @@ const config: NuxtConfiguration = {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '@/plugins/data-url-download',
+    '@/plugins/date-format',
     '@/plugins/vue-konva',
     '@/plugins/vuetify'
   ],

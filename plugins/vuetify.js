@@ -2,7 +2,12 @@ import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import colors from 'vuetify/es5/util/colors'
 
+const ICONS =  {
+  'download': 'cloud_download'
+}
+
 Vue.use(Vuetify, {
+  icons: ICONS,
   theme: {
     primary: colors.blue.darken2,
     accent: colors.grey.darken3,

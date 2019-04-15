@@ -33,6 +33,7 @@ export default class Credit extends Vue {
     this.imageObj.onload = () => {
       this.imageObj = this.imageObj
       stage.draw()
+      this.$emit('changed', { dataUrl: stage.toDataURL() })
     }
   }
 
