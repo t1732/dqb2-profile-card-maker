@@ -36,7 +36,7 @@ export default class Default extends Vue {
 }
 </script>
 
-<style lang="styl">
+<style lang="stylus" scoped>
 .footerCard
   width 100%
   font-size 0.9em
