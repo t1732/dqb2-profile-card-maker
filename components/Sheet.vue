@@ -2,12 +2,30 @@
 v-stage(ref="stage" :config="configKonva")
   v-layer
     v-image(:config="configImage")
-    konva-text(ref="nickname" :config="nicknameConfig")
+    konva-text(ref="nickname" :config="nicknameConfig" :scale="scale")
+    konva-text(ref="twitterId" :config="twitterId" :scale="scale")
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 let vm: any = {}
+
+interface Config {
+  width: number
+  height: number
+}
+
+interface ImageConfig extends Config {
+  image: HTMLImageElement
+}
+
+interface TextConfig {
+  x: number
+  y: number
+  fontSize: number
+  fontFamily: string
+  text: string
+}
 
 @Component({
   components: {
@@ -37,28 +55,39 @@ export default class Credit extends Vue {
     }
   }
 
-  get configKonva(): object {
+  get fontFamily(): string {
+    return 'Nico Moji'  // M PLUS, Sawarabi Gothic, Noto Sans JP, Kosugi, Kosugi Maru, Nico Moji
+  }
+  get configKonva(): Config {
     return {
       width: this.width * this.scale,
       height: this.height * this.scale
     }
   }
-  get configImage(): {[s: string]: HTMLImageElement | number} {
+  get configImage(): ImageConfig {
     return {
       image: this.imageObj,
-      width: this.width * this.scale,
-      height: this.height * this.scale
-      }
+      width: this.configKonva.width,
+      height: this.configKonva.height
+    }
   }
-  get nicknameConfig(): {[s: string]: string | number} {
+  get nicknameConfig(): TextConfig {
     return {
-      x: 270 * this.scale,
-      y: 145 * this.scale,
-      fontSize: 28 * this.scale,
-      fontFamily: 'Nico Moji',
+      x: 270,
+      y: 145,
+      fontSize: 28,
+      fontFamily: this.fontFamily,
       text: 'ニックネーム'
     }
-    // M PLUS, Sawarabi Gothic, Noto Sans JP, Kosugi, Kosugi Maru, Nico Moji
+  }
+  get twitterId(): TextConfig {
+    return {
+      x: 320,
+      y: 195,
+      fontSize: 24,
+      fontFamily: this.fontFamily,
+      text: '@xxxxxxxxx'
+    }
   }
 
   mounted() {
