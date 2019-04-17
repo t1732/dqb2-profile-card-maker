@@ -3,7 +3,7 @@ v-stage(ref="stage" :config="configKonva")
   v-layer
     v-image(:config="configImage")
     konva-text(ref="nickname" :config="nicknameConfig" :scale="scale")
-    konva-text(ref="twitterId" :config="twitterId" :scale="scale")
+    konva-text(ref="twitterId" :config="twitterIdConfig" :scale="scale")
 </template>
 
 <script lang="ts">
@@ -50,6 +50,10 @@ export default class Credit extends Vue {
   readonly nickname!: string
   @Prop({ required: true })
   readonly nicknameColor!: string
+  @Prop({ required: true })
+  readonly twitterId!: string
+  @Prop({ required: true })
+  readonly twitterIdColor!: string
 
   @Watch('image')
   onImageChanged(val: string): void {
@@ -90,14 +94,14 @@ export default class Credit extends Vue {
       fill: this.nicknameColor
     }
   }
-  get twitterId(): TextConfig {
+  get twitterIdConfig(): TextConfig {
     return {
       x: 320,
       y: 195,
       fontSize: 24,
       fontFamily: this.fontfamily,
-      text: '@xxxxxxxxx',
-      fill: this.nicknameColor
+      text: this.twitterId,
+      fill: this.twitterIdColor
     }
   }
 

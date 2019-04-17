@@ -25,6 +25,12 @@ v-navigation-drawer.editTool_drawer(v-model="localValue" right app dark :width="
         :label="nicknameLabel"
         :color.sync="localNicknameColor"
         outline)
+    v-flex(xs12)
+      text-field-set(
+        v-model="localTwitterId"
+        :label="twitterIdLabel"
+        :color.sync="localTwitterIdColor"
+        outline)
 </template>
 
 <script lang="ts">
@@ -40,6 +46,7 @@ export default class Credit extends Vue {
   title: string = "編集ツール"
   selectorLabel: string = "カードタイプ"
   nicknameLabel: string = "ニックネーム"
+  twitterIdLabel: string = "Twitter ID"
 
   @Prop({ default: false })
   value!: boolean
@@ -51,6 +58,10 @@ export default class Credit extends Vue {
   nickname!: string
   @Prop({ required: true })
   nicknameColor!: string
+  @Prop({ required: true })
+  twitterId!: string
+  @Prop({ required: true })
+  twitterIdColor!: string
 
   get localValue (): boolean {
     return this.value
@@ -92,6 +103,18 @@ export default class Credit extends Vue {
   }
   set localNicknameColor (val: string) {
     this.$emit('update:nicknameColor', val)
+  }
+  get localTwitterId (): string {
+    return this.twitterId
+  }
+  set localTwitterId (val: string) {
+    this.$emit('update:twitterId', val)
+  }
+  get localTwitterIdColor (): string {
+    return this.twitterIdColor
+  }
+  set localTwitterIdColor (val: string) {
+    this.$emit('update:twitterIdColor', val)
   }
 
   onClose (): void {

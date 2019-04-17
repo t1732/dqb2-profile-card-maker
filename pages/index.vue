@@ -9,11 +9,13 @@ v-layout(column justify-center align-center)
       :fontfamily="fontfamily"
       :nickname="nickname"
       :nickname-color="nicknameColor"
+      :twitter-id="twitterId"
+      :twitter-id-color="twitterIdColor"
       @changed="onChangedSheet")
 </template>
 
 <script lang="ts">
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 
 const width: number = window.innerWidth
@@ -28,8 +30,10 @@ const height: number = window.innerHeight
       'cardType',
       'fontfamily',
       'nickname',
-      'nicknameColor'
-    ])
+      'nicknameColor',
+      'twitterIdColor'
+    ]),
+    ...mapGetters('edit-tool', ['twitterId'])
   },
   methods: {
     ...mapActions({

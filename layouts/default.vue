@@ -7,6 +7,8 @@ v-app
     :fontfamily.sync="selectFontfamily"
     :nickname.sync="inputNickname"
     :nickname-color.sync="inputNicknameColor"
+    :twitter-id.sync="inputTwitterId"
+    :twitter-id-color.sync="inputTwitterIdColor"
     @close="close")
   v-toolbar(fixed app color="primary")
     v-toolbar-title(v-text="title")
@@ -22,7 +24,7 @@ v-app
 </template>
 
 <script lang="ts">
-import { mapState, mapMutations, mapActions } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
@@ -34,12 +36,14 @@ import { Component, Vue } from 'vue-property-decorator'
   computed: {
     ...mapState('drawer', ['open']),
     ...mapState('edit-tool', [
-        'cardType',
-        'cardTypeItems',
-        'fontfamily',
-        'nickname',
-        'nicknameColor'
-      ])
+      'cardType',
+      'cardTypeItems',
+      'fontfamily',
+      'nickname',
+      'nicknameColor',
+      'twitterId',
+      'twitterIdColor'
+    ]),
   },
   methods: {
     ...mapMutations('drawer', ['setOpen']),
@@ -47,7 +51,9 @@ import { Component, Vue } from 'vue-property-decorator'
         'setCardType',
         'setFontfamily',
         'setNickname',
-        'setNicknameColor'
+        'setNicknameColor',
+        'setTwitterId',
+        'setTwitterIdColor'
       ]),
     ...mapActions('drawer', ['toggle']),
     ...mapActions('sheet', ['download'])
@@ -88,6 +94,18 @@ export default class Default extends Vue {
   }
   set inputNicknameColor (val: string) {
     this['setNicknameColor'](val)
+  }
+  get inputTwitterId (): string {
+    return this['twitterId']
+  }
+  set inputTwitterId (val: string) {
+    this['setTwitterId'](val)
+  }
+  get inputTwitterIdColor (): string {
+    return this['twitterIdColor']
+  }
+  set inputTwitterIdColor (val: string) {
+    this['setTwitterIdColor'](val)
   }
 
   close (): void {
