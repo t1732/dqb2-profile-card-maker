@@ -58,6 +58,9 @@ const config: NuxtConfiguration = {
   ** Nuxt.js modules
   */
   modules: [
+    ['@nuxtjs/google-analytics', {
+      id: 'UA-3880329-7'
+    }]
   ],
 
   /*
