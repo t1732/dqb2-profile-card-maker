@@ -11,13 +11,7 @@ v-app
       lisence
     v-container
       nuxt
-  v-footer.footer.white--text(app height="auto" color="secondary")
-    v-layout.ma-2(column align-center justy-center)
-      v-flex(xs12)
-        span(v-html="credit_1")
-      v-flex(xs12)
-        span(v-html="credit_2")
-    download-button(@click="download")
+  app-footer(@download="download")
 </template>
 
 <script lang="ts">
@@ -28,7 +22,7 @@ import { VuetifyIcon } from 'vuetify'
 @Component({
   components: {
     EditToolDrawer: () => import('~/components/EditToolDrawer.vue'),
-    DownloadButton: () => import('~/components/DownloadButton.vue'),
+    AppFooter: () => import('~/components/Footer.vue'),
     Lisence: () => import('~/components/Lisence.vue')
   },
   computed: {
@@ -44,8 +38,6 @@ import { VuetifyIcon } from 'vuetify'
 })
 export default class Default extends Vue {
   title: string = 'DQB2自己紹介カード作成ツール'
-  credit_1: string = '&copy; 2019 @euphton'
-  credit_2: string = "&copy; 2018 ARMOR PROJECT/BIRD STUDIO/SQUARE ENIX All Rights Reserved."
 
   get drawerOpen (): boolean {
     return this['open']
@@ -69,8 +61,6 @@ export default class Default extends Vue {
 </script>
 
 <style lang="stylus" scoped>
-.footer
-  font-size 0.9em
 main
   background-color var(--v-secondary-base)
 </style>
