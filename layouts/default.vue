@@ -5,12 +5,13 @@ v-app
     :select.sync="selectCardType"
     :items="cardTypeItems"
     :fontfamily.sync="selectFontfamily"
-    :nickname.sync="inputNickname")
+    :nickname.sync="inputNickname"
+    @close="close")
   v-toolbar(fixed app color="primary")
     v-toolbar-title(v-text="title")
     v-spacer
     v-btn(icon @click.stop="toggle")
-      v-icon(v-text="editToolIcon")
+      v-icon(v-text="$vuetify.icons.edit_tool_open")
   v-content
     .mt-3
       lisence
@@ -22,7 +23,6 @@ v-app
 <script lang="ts">
 import { mapState, mapMutations, mapActions } from 'vuex'
 import { Component, Vue } from 'vue-property-decorator'
-import { VuetifyIcon } from 'vuetify'
 
 @Component({
   components: {
@@ -81,9 +81,8 @@ export default class Default extends Vue {
     this['setNickname'](val)
   }
 
-  get editToolIcon (): VuetifyIcon {
-    const iconName = this['open'] ? 'edit_tool_close' : 'edit_tool_open'
-    return this.$vuetify.icons[iconName]
+  close (): void {
+    this.drawerOpen = false
   }
 }
 </script>

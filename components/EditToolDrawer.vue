@@ -2,6 +2,9 @@
 v-navigation-drawer.editTool_drawer(v-model="localValue" right app dark :width="width")
   v-toolbar.transparent(color="primary")
     v-toolbar-title.black--text(v-text="title")
+    v-spacer
+    v-btn(icon @click.stop="onClose")
+      v-icon(v-text="$vuetify.icons.edit_tool_close" color="black")
   v-divider
   v-layout.pa-3(column)
     v-flex(xs12)
@@ -76,6 +79,10 @@ export default class Credit extends Vue {
   }
   set localNickname (val: string) {
     this.$emit('update:nickname', val)
+  }
+
+  onClose (): void {
+    this.$emit('close')
   }
 }
 </script>
