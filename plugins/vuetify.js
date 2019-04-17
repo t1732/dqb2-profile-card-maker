@@ -3,6 +3,8 @@ import Vuetify from 'vuetify/lib'
 import colors from 'vuetify/es5/util/colors'
 
 const ICONS =  {
+  'edit_tool_open': 'create',
+  'edit_tool_close': 'arrow_forward',
   'download': 'cloud_download'
 }
 
