@@ -43,21 +43,27 @@ export default class Credit extends Vue {
   readonly height!: number
   @Prop({ default: 1 })
   readonly scale!: number
+  @Prop({ required: true })
+  readonly fontfamily!: string
+  @Prop({ required: true })
+  readonly nickname!: string
 
   @Watch('image')
-  onImageChanged(value: string) {
+  onImageChanged(val: string): void {
     const stage = vm.$refs.stage.getNode()
-    this.imageObj.src = value
+    this.imageObj.src = val
     this.imageObj.onload = () => {
       this.imageObj = this.imageObj
       stage.draw()
       this.$emit('changed', { dataUrl: stage.toDataURL() })
     }
   }
-
-  get fontFamily(): string {
-    return 'Nico Moji'  // M PLUS, Sawarabi Gothic, Noto Sans JP, Kosugi, Kosugi Maru, Nico Moji
+  @Watch('fontfamily')
+  @Watch('nickname')
+  onChangedNickname (val: string): void {
+    this.onImageChanged(this.image)
   }
+
   get configKonva(): Config {
     return {
       width: this.width * this.scale,
@@ -76,8 +82,8 @@ export default class Credit extends Vue {
       x: 270,
       y: 145,
       fontSize: 28,
-      fontFamily: this.fontFamily,
-      text: 'ニックネーム'
+      fontFamily: this.fontfamily,
+      text: this.nickname
     }
   }
   get twitterId(): TextConfig {
@@ -85,7 +91,7 @@ export default class Credit extends Vue {
       x: 320,
       y: 195,
       fontSize: 24,
-      fontFamily: this.fontFamily,
+      fontFamily: this.fontfamily,
       text: '@xxxxxxxxx'
     }
   }

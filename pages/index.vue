@@ -6,6 +6,8 @@ v-layout(column justify-center align-center)
       :scale="scale"
       :width="profileCardImageSize.width"
       :height="profileCardImageSize.heith"
+      :fontfamily="fontfamily"
+      :nickname="nickname"
       @changed="onChangedSheet")
 </template>
 
@@ -22,7 +24,9 @@ const height: number = window.innerHeight
   },
   computed: {
     ...mapState('edit-tool', [
-      'cardType'
+      'cardType',
+      'fontfamily',
+      'nickname'
     ])
   },
   methods: {

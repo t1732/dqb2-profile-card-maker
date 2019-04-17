@@ -1,6 +1,11 @@
 <template lang="pug">
 v-app
-  edit-tool-drawer(v-model="drawerOpen" :select.sync="selectCardType" :items="cardTypeItems")
+  edit-tool-drawer(
+    v-model="drawerOpen"
+    :select.sync="selectCardType"
+    :items="cardTypeItems"
+    :fontfamily.sync="selectFontfamily"
+    :nickname.sync="inputNickname")
   v-toolbar(fixed app color="primary")
     v-toolbar-title(v-text="title")
     v-spacer
@@ -27,13 +32,22 @@ import { VuetifyIcon } from 'vuetify'
   },
   computed: {
     ...mapState('drawer', ['open']),
-    ...mapState('edit-tool', ['cardType', 'cardTypeItems'])
+    ...mapState('edit-tool', [
+        'cardType',
+        'cardTypeItems',
+        'fontfamily',
+        'nickname'
+      ])
   },
   methods: {
     ...mapMutations('drawer', ['setOpen']),
+    ...mapMutations('edit-tool', [
+        'setCardType',
+        'setFontfamily',
+        'setNickname'
+      ]),
     ...mapActions('drawer', ['toggle']),
-    ...mapActions('sheet', ['download']),
-    ...mapActions('edit-tool', ['onSelected'])
+    ...mapActions('sheet', ['download'])
   }
 })
 export default class Default extends Vue {
@@ -50,7 +64,21 @@ export default class Default extends Vue {
     return this['cardType']
   }
   set selectCardType (val: string) {
-    this['onSelected']({ cardType: val })
+    this['setCardType'](val)
+  }
+
+  get selectFontfamily (): string {
+    return this['fontfamily']
+  }
+  set selectFontfamily (val: string) {
+    this['setFontfamily'](val)
+  }
+
+  get inputNickname (): string {
+    return this['nickname']
+  }
+  set inputNickname (val: string) {
+    this['setNickname'](val)
   }
 
   get editToolIcon (): VuetifyIcon {
