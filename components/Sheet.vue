@@ -24,7 +24,8 @@ interface TextConfig {
   y: number
   fontSize: number
   fontFamily: string
-  text: string
+  text: string,
+  fill: string
 }
 
 @Component({
@@ -47,6 +48,8 @@ export default class Credit extends Vue {
   readonly fontfamily!: string
   @Prop({ required: true })
   readonly nickname!: string
+  @Prop({ required: true })
+  readonly nicknameColor!: string
 
   @Watch('image')
   onImageChanged(val: string): void {
@@ -83,7 +86,8 @@ export default class Credit extends Vue {
       y: 145,
       fontSize: 28,
       fontFamily: this.fontfamily,
-      text: this.nickname
+      text: this.nickname,
+      fill: this.nicknameColor
     }
   }
   get twitterId(): TextConfig {
@@ -92,7 +96,8 @@ export default class Credit extends Vue {
       y: 195,
       fontSize: 24,
       fontFamily: this.fontfamily,
-      text: '@xxxxxxxxx'
+      text: '@xxxxxxxxx',
+      fill: this.nicknameColor
     }
   }
 

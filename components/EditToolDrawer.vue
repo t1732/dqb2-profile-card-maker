@@ -20,16 +20,21 @@ v-navigation-drawer.editTool_drawer(v-model="localValue" right app dark :width="
         :label="fontfamilyLabel"
         outline)
     v-flex(xs12)
-      v-text-field(
+      text-field-set(
         v-model="localNickname"
         :label="nicknameLabel"
+        :color.sync="localNicknameColor"
         outline)
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
-@Component
+@Component({
+  components: {
+    TextFieldSet: () => import('~/components/TextFieldSet.vue')
+  }
+})
 export default class Credit extends Vue {
   width: number = 300
   title: string = "編集ツール"
@@ -44,6 +49,8 @@ export default class Credit extends Vue {
   items!: {[s: string]: string}
   @Prop({ required: true })
   nickname!: string
+  @Prop({ required: true })
+  nicknameColor!: string
 
   get localValue (): boolean {
     return this.value
@@ -79,6 +86,12 @@ export default class Credit extends Vue {
   }
   set localNickname (val: string) {
     this.$emit('update:nickname', val)
+  }
+  get localNicknameColor (): string {
+    return this.nicknameColor
+  }
+  set localNicknameColor (val: string) {
+    this.$emit('update:nicknameColor', val)
   }
 
   onClose (): void {

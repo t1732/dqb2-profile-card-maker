@@ -15,6 +15,7 @@
     "konva": "^3.2.4",
     "nuxt": "^2.4.0",
     "ts-node": "^8.0.3",
+    "vue-color": "^2.7.0",
     "vue-konva": "^2.0.4",
     "vue-property-decorator": "^8.1.0",
     "vuetify": "^1.5.5",

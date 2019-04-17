@@ -6,6 +6,7 @@ v-app
     :items="cardTypeItems"
     :fontfamily.sync="selectFontfamily"
     :nickname.sync="inputNickname"
+    :nickname-color.sync="inputNicknameColor"
     @close="close")
   v-toolbar(fixed app color="primary")
     v-toolbar-title(v-text="title")
@@ -36,7 +37,8 @@ import { Component, Vue } from 'vue-property-decorator'
         'cardType',
         'cardTypeItems',
         'fontfamily',
-        'nickname'
+        'nickname',
+        'nicknameColor'
       ])
   },
   methods: {
@@ -44,7 +46,8 @@ import { Component, Vue } from 'vue-property-decorator'
     ...mapMutations('edit-tool', [
         'setCardType',
         'setFontfamily',
-        'setNickname'
+        'setNickname',
+        'setNicknameColor'
       ]),
     ...mapActions('drawer', ['toggle']),
     ...mapActions('sheet', ['download'])
@@ -79,6 +82,12 @@ export default class Default extends Vue {
   }
   set inputNickname (val: string) {
     this['setNickname'](val)
+  }
+  get inputNicknameColor (): string {
+    return this['nicknameColor']
+  }
+  set inputNicknameColor (val: string) {
+    this['setNicknameColor'](val)
   }
 
   close (): void {

@@ -8,11 +8,13 @@ export const state = () => ({
     { value: profileCard_M, text: "じこしょうかい(♂)" }
   ],
   fontfamily: "Sawarabi Gothic",
-  nickname: ""
+  nickname: "",
+  nicknameColor: "#6C5E69"
 })
 
 export const mutations = {
-  setCardType: (state, cardType) => state.cardType = cardType,
-  setFontfamily: (state, fontfamily) => state.fontfamily = fontfamily,
-  setNickname: (state, nickname) => state.nickname = nickname
+  setCardType: (state, val) => state.cardType = val,
+  setFontfamily: (state, val) => state.fontfamily = val,
+  setNickname: (state, val) => state.nickname = val,
+  setNicknameColor: (state, val) => state.nicknameColor = val
 }
