@@ -65,11 +65,6 @@ export default class Credit extends Vue {
       this.$emit('changed', { dataUrl: stage.toDataURL() })
     }
   }
-  @Watch('fontfamily')
-  @Watch('nickname')
-  onChangedNickname (val: string): void {
-    this.onImageChanged(this.image)
-  }
 
   get configKonva(): Config {
     return {
