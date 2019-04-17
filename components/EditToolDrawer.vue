@@ -1,7 +1,7 @@
 <template lang="pug">
-v-navigation-drawer(v-model="localValue" right app fixed width="400")
-  v-toolbar.transparent(flat)
-    v-toolbar-title(v-text="title")
+v-navigation-drawer.editTool_drawer(v-model="localValue" right app dark width="400")
+  v-toolbar.transparent(color="primary")
+    v-toolbar-title.black--text(v-text="title")
   v-divider
   v-layout.pa-3
     v-flex(xs12)
@@ -42,3 +42,8 @@ export default class Credit extends Vue {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+.editTool_drawer
+  background-color var(--v-secondary-base)
+</style>

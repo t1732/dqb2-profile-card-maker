@@ -1,7 +1,7 @@
 <template lang="pug">
-v-app(dark)
+v-app
   edit-tool-drawer(v-model="drawerOpen" :select.sync="selectCardType" :items="cardTypeItems")
-  v-toolbar(fixed app)
+  v-toolbar(fixed app color="primary")
     v-toolbar-title(v-text="title")
     v-spacer
     v-btn(icon @click.stop="toggle")
@@ -11,11 +11,13 @@ v-app(dark)
       lisence
     v-container
       nuxt
-  v-footer(app inset height="auto")
-    v-card.footerCard.text-xs-center(flat tile)
-      v-card-text.text-xs-center.pt-2.pb-1(v-html="credit_1")
-      v-card-text.text-xs-center.pb-2.pt-0(v-html="credit_2")
-      download-button(@click="download")
+  v-footer.footer.white--text(app height="auto" color="secondary")
+    v-layout.ma-2(column align-center justy-center)
+      v-flex(xs12)
+        span(v-html="credit_1")
+      v-flex(xs12)
+        span(v-html="credit_2")
+    download-button(@click="download")
 </template>
 
 <script lang="ts">
@@ -67,7 +69,8 @@ export default class Default extends Vue {
 </script>
 
 <style lang="stylus" scoped>
-.footerCard
-  width 100%
+.footer
   font-size 0.9em
+main
+  background-color var(--v-secondary-base)
 </style>
