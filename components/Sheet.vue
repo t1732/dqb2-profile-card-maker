@@ -8,27 +8,7 @@ v-stage(ref="stage" :config="configKonva" @mousedown="handleStageMouseDown")
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-
-interface Config {
-  name?: string
-  width: number
-  height: number
-}
-
-interface ImageConfig extends Config {
-  image: HTMLImageElement
-}
-
-interface TextConfig {
-  name?: string
-  x: number
-  y: number
-  fontSize: number
-  fontFamily: string
-  text: string,
-  fill: string,
-  draggable?: boolean
-}
+import { KonvaConfig, KonvaImageConfig, KonvaTextConfig } from '~/types'
 
 @Component({
   components: {
@@ -78,20 +58,20 @@ export default class Sheet extends Vue {
     this.onImageChanged(this.image)
   }
 
-  get configKonva(): Config {
+  get configKonva(): KonvaConfig {
     return {
       width: this.width * this.scale,
       height: this.height * this.scale
     }
   }
-  get configImage(): ImageConfig {
+  get configImage(): KonvaImageConfig {
     return {
       image: this.imageObj,
       width: this.configKonva.width,
       height: this.configKonva.height
     }
   }
-  get textConfigs(): TextConfig[] {
+  get textConfigs(): KonvaTextConfig[] {
     return [
       {
         name: 'nickname',
@@ -121,8 +101,11 @@ export default class Sheet extends Vue {
     if (this.image) this.onImageChanged(this.image)
   }
 
-  /** マウスクリックハンドラー */
-  handleStageMouseDown(e) {  // https://konvajs.org/docs/vue/Transformer.html
+  /**
+   * マウスクリックハンドラー
+   *  https://konvajs.org/docs/vue/Transformer.html
+   */
+  handleStageMouseDown(e) {
       if (e.target === e.target.getStage()) {
         this.selectedShapeName = ''
         this.updateTransformer()
@@ -134,7 +117,7 @@ export default class Sheet extends Vue {
       }
 
       const name: string = e.target.name()
-      const config: TextConfig | undefined = this.textConfigs.find(r => r.name === name);
+      const config: KonvaTextConfig | undefined = this.textConfigs.find(r => r.name === name);
       if (config) {
         this.selectedShapeName = config.name as string
       } else {
