@@ -2,15 +2,12 @@
 v-app
   edit-tool-drawer(
     v-model="drawerOpen"
-    :card-select.sync="cardSelect"
-    :card-items="cardItems"
-    :fontfamily.sync="selectFontfamily"
-    :nickname.sync="inputNickname"
-    :nickname-color.sync="inputNicknameColor"
-    :twitter-id.sync="inputTwitterId"
-    :twitter-id-color.sync="inputTwitterIdColor"
-    :online-name.sync="inputOnlineName"
-    :online-name-color.sync="inputOnlineNameColor"
+    :card-select.sync="localCardSelect"
+    :fontfamily.sync="localFontfamily"
+    :font-color.sync="localFontColor"
+    :nickname.sync="localNickname"
+    :twitter-id.sync="localTwitterId"
+    :online-name.sync="localOnlineName"
     @close="close")
   v-toolbar(fixed app color="primary")
     v-toolbar-title(v-text="title")
@@ -39,14 +36,10 @@ import { Component, Vue } from 'vue-property-decorator'
     ...mapState('drawer', ['open']),
     ...mapState('edit-tool', [
       'cardSelect',
-      'cardItems',
       'fontfamily',
-      'nickname',
-      'nicknameColor',
+      'fontColor',
       'twitterId',
-      'twitterIdColor',
-      'onlineName',
-      'onlineNameColor'
+      'onlineName'
     ])
   },
   methods: {
@@ -54,12 +47,10 @@ import { Component, Vue } from 'vue-property-decorator'
     ...mapMutations('edit-tool', [
         'setCardSelect',
         'setFontfamily',
+        'setFontColor',
         'setNickname',
-        'setNicknameColor',
         'setTwitterId',
-        'setTwitterIdColor',
-        'setOnlineName',
-        'setOnlineNameColor'
+        'setOnlineName'
       ]),
     ...mapActions('drawer', ['toggle']),
     ...mapActions('sheet', ['download'])
@@ -74,53 +65,41 @@ export default class Default extends Vue {
   set drawerOpen (val: boolean) {
     this['setOpen'](val)
   }
-  get selectCardSelect (): string {
+  get localCardSelect (): string {
     return this['cardSelect']
   }
-  set selectCardSelect (val: string) {
+  set localCardSelect (val: string) {
     this['setCardSelect'](val)
   }
-  get selectFontfamily (): string {
+  get localFontfamily (): string {
     return this['fontfamily']
   }
-  set selectFontfamily (val: string) {
+  set localFontfamily (val: string) {
     this['setFontfamily'](val)
   }
-  get inputNickname (): string {
+  get localFontColor (): string {
+    return this['fontColor']
+  }
+  set localFontColor (val: string) {
+    this['setFontColor'](val)
+  }
+  get localNickname (): string {
     return this['nickname']
   }
-  set inputNickname (val: string) {
+  set localNickname (val: string) {
     this['setNickname'](val)
   }
-  get inputNicknameColor (): string {
-    return this['nicknameColor']
-  }
-  set inputNicknameColor (val: string) {
-    this['setNicknameColor'](val)
-  }
-  get inputTwitterId (): string {
+  get localTwitterId (): string {
     return this['twitterId']
   }
-  set inputTwitterId (val: string) {
+  set localTwitterId (val: string) {
     this['setTwitterId'](val)
   }
-  get inputTwitterIdColor (): string {
-    return this['twitterIdColor']
-  }
-  set inputTwitterIdColor (val: string) {
-    this['setTwitterIdColor'](val)
-  }
-  get inputOnlineName (): string {
+  get localOnlineName (): string {
     return this['onlineName']
   }
-  set inputOnlineName (val: string) {
+  set localOnlineName (val: string) {
     this['setOnlineName'](val)
-  }
-  get inputOnlineNameColor (): string {
-    return this['onlineNameColor']
-  }
-  set inputOnlineNameColor (val: string) {
-    this['setOnlineNameColor'](val)
   }
 
   close (): void {

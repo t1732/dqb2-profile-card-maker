@@ -7,12 +7,10 @@ v-layout(column justify-center align-center)
       :width="profileCardImageSize.width"
       :height="profileCardImageSize.heith"
       :fontfamily="fontfamily"
+      :font-color="fontColor"
       :nickname="nickname"
-      :nickname-color="nicknameColor"
       :twitter-id="twitterId"
-      :twitter-id-color="twitterIdColor"
       :online-name="onlineName"
-      :online-name-color="onlineNameColor"
       @changed="onChangedSheet")
 </template>
 
@@ -31,11 +29,9 @@ const height: number = window.innerHeight
     ...mapState('edit-tool', [
       'cardSelect',
       'fontfamily',
+      'fontColor',
       'nickname',
-      'nicknameColor',
-      'twitterIdColor',
-      'onlineName',
-      'onlineNameColor'
+      'onlineName'
     ]),
     ...mapGetters('edit-tool', ['twitterId'])
   },

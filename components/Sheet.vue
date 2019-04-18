@@ -20,8 +20,6 @@ export default class Sheet extends Vue {
   cardImageObj: HTMLImageElement = new Image()
   selectedShapeName: string = ''
 
-  @Prop({ required: true })
-  readonly cardSelect!: string
   @Prop({ default: 800 })
   readonly cardWidth!: number
   @Prop({ default: 1200 })
@@ -29,19 +27,17 @@ export default class Sheet extends Vue {
   @Prop({ default: 1 })
   readonly scale!: number
   @Prop({ required: true })
+  readonly cardSelect!: string
+  @Prop({ required: true })
   readonly fontfamily!: string
+  @Prop({ required: true })
+  readonly fontColor!: string
   @Prop({ required: true })
   readonly nickname!: string
   @Prop({ required: true })
-  readonly nicknameColor!: string
-  @Prop({ required: true })
   readonly twitterId!: string
   @Prop({ required: true })
-  readonly twitterIdColor!: string
-  @Prop({ required: true })
   readonly onlineName!: string
-  @Prop({ required: true })
-  readonly onlineNameColor!: string
 
   @Watch('image')
   onCardImageChanged(val: string): void {
@@ -53,13 +49,12 @@ export default class Sheet extends Vue {
       this.$emit('changed', { dataUrl: stage.toDataURL() })
     }
   }
+  @Watch('cardSelect')
   @Watch('fontfamily')
+  @Watch('fontColor')
   @Watch('nickname')
-  @Watch('nicknameColor')
   @Watch('twitterId')
-  @Watch('twitterIdColor')
   @Watch('onlineName')
-  @Watch('onlineNameColor')
   onChangedText(val: string): void {
     this.onCardImageChanged(this.cardSelect)
   }
@@ -86,7 +81,7 @@ export default class Sheet extends Vue {
         fontSize: 28,
         fontFamily: this.fontfamily,
         text: this.nickname,
-        fill: this.nicknameColor,
+        fill: this.fontColor,
         draggable: true
       },
       {
@@ -96,7 +91,7 @@ export default class Sheet extends Vue {
         fontSize: 24,
         fontFamily: this.fontfamily,
         text: this.twitterId,
-        fill: this.twitterIdColor,
+        fill: this.fontColor,
         draggable: true
       },
       {
@@ -106,7 +101,7 @@ export default class Sheet extends Vue {
         fontSize: 24,
         fontFamily: this.fontfamily,
         text: this.onlineName,
-        fill: this.onlineNameColor,
+        fill: this.fontColor,
         draggable: true
       }
     ]

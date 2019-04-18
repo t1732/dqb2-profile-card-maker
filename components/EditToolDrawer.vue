@@ -8,35 +8,15 @@ v-navigation-drawer.editTool_drawer(v-model="localValue" right app dark :width="
   v-divider
   v-layout.pa-3(column)
     v-flex(xs12)
-      v-select(
-        v-model="localCardSelect"
-        :items="cardItems"
-        :label="cardSelectLabel"
-        outline)
+      card-type-select(v-model="localCardSelect" :label="cardSelectLabel" outline)
     v-flex(xs12)
-      v-select(
-        v-model="localFontfamily"
-        :items="fontfamilyItems"
-        :label="fontfamilyLabel"
-        outline)
+      font-select(v-model="localFontfamily" :label="fontfamilyLabel" :color.sync="localFontColor")
     v-flex(xs12)
-      text-field-set(
-        v-model="localNickname"
-        :label="nicknameLabel"
-        :color.sync="localNicknameColor"
-        outline)
+      text-field(v-model="localNickname" :label="nicknameLabel")
     v-flex(xs12)
-      text-field-set(
-        v-model="localTwitterId"
-        :label="twitterIdLabel"
-        :color.sync="localTwitterIdColor"
-        outline)
+      text-field(v-model="localTwitterId" :label="twitterIdLabel")
     v-flex(xs12)
-      text-field-set(
-        v-model="localOnlineName"
-        :label="onlineNameLabel"
-        :color.sync="localOnlineNameColor"
-        outline)
+      text-field(v-model="localOnlineName" :label="onlineNameLabel")
 </template>
 
 <script lang="ts">
@@ -44,7 +24,9 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component({
   components: {
-    TextFieldSet: () => import('~/components/TextFieldSet.vue')
+    CardTypeSelect: () => import('~/components/CardTypeSelect.vue'),
+    FontSelect: () => import('~/components/FontSelect.vue'),
+    TextField: () => import('~/components/TextField.vue')
   }
 })
 export default class Credit extends Vue {
@@ -60,22 +42,16 @@ export default class Credit extends Vue {
   value!: boolean
   @Prop({ required: true })
   cardSelect!: string
-  @Prop({ default: () => ([]) })
-  cardItems!: {[s: string]: string}
   @Prop({ required: true })
   fontfamily!: string
   @Prop({ required: true })
-  nickname!: string
+  fontColor!: string
   @Prop({ required: true })
-  nicknameColor!: string
+  nickname!: string
   @Prop({ required: true })
   twitterId!: string
   @Prop({ required: true })
-  twitterIdColor!: string
-  @Prop({ required: true })
   onlineName!: string
-  @Prop({ required: true })
-  onlineNameColor!: string
 
   get localValue (): boolean {
     return this.value
@@ -83,7 +59,6 @@ export default class Credit extends Vue {
   set localValue (val: boolean) {
     this.$emit('input', val)
   }
-
   get localCardSelect (): string {
     return this.cardSelect
   }
@@ -96,8 +71,11 @@ export default class Credit extends Vue {
   set localFontfamily (val: string) {
     this.$emit('update:fontfamily', val)
   }
-  get fontfamilyItems (): string[] {
-    return ['M PLUS', 'Sawarabi Gothic', 'Noto Sans JP', 'Kosugi', 'Kosugi Maru', 'Nico Moji']
+  get localFontColor (): string {
+    return this.fontColor
+  }
+  set localFontColor (val: string) {
+    this.$emit('update:fontColor', val)
   }
   get localNickname (): string {
     return this.nickname
@@ -105,35 +83,17 @@ export default class Credit extends Vue {
   set localNickname (val: string) {
     this.$emit('update:nickname', val)
   }
-  get localNicknameColor (): string {
-    return this.nicknameColor
-  }
-  set localNicknameColor (val: string) {
-    this.$emit('update:nicknameColor', val)
-  }
   get localTwitterId (): string {
     return this.twitterId
   }
   set localTwitterId (val: string) {
     this.$emit('update:twitterId', val)
   }
-  get localTwitterIdColor (): string {
-    return this.twitterIdColor
-  }
-  set localTwitterIdColor (val: string) {
-    this.$emit('update:twitterIdColor', val)
-  }
   get localOnlineName(): string {
     return this.onlineName
   }
   set localOnlineName(val: string) {
     this.$emit('update:onlineName', val)
-  }
-  get localOnlineNameColor(): string {
-    return this.onlineNameColor
-  }
-  set localOnlineNameColor(val: string) {
-    this.$emit('update:onlineNameColor', val)
   }
 
   onClose (): void {
