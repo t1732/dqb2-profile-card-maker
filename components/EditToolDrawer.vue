@@ -9,9 +9,9 @@ v-navigation-drawer.editTool_drawer(v-model="localValue" right app dark :width="
   v-layout.pa-3(column)
     v-flex(xs12)
       v-select(
-        v-model="localSelect"
-        :items="items"
-        :label="selectorLabel"
+        v-model="localCardSelect"
+        :items="cardItems"
+        :label="cardSelectLabel"
         outline)
     v-flex(xs12)
       v-select(
@@ -50,8 +50,8 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 export default class Credit extends Vue {
   width: number = 300
   title: string = "編集ツール"
+  cardSelectLabel: string = "カードタイプ"
   fontfamilyLabel: string = "フォント"
-  selectorLabel: string = "カードタイプ"
   nicknameLabel: string = "ニックネーム"
   twitterIdLabel: string = "Twitter ID"
   onlineNameLabel: string = "オンライン名"
@@ -59,9 +59,9 @@ export default class Credit extends Vue {
   @Prop({ default: false })
   value!: boolean
   @Prop({ required: true })
-  select!: string
+  cardSelect!: string
   @Prop({ default: () => ([]) })
-  items!: {[s: string]: string}
+  cardItems!: {[s: string]: string}
   @Prop({ required: true })
   fontfamily!: string
   @Prop({ required: true })
@@ -84,11 +84,11 @@ export default class Credit extends Vue {
     this.$emit('input', val)
   }
 
-  get localSelect (): string {
-    return this.select
+  get localCardSelect (): string {
+    return this.cardSelect
   }
-  set localSelect (val: string) {
-    this.$emit('update:select', val)
+  set localCardSelect (val: string) {
+    this.$emit('update:cardSelect', val)
   }
   get localFontfamily (): string {
     return this.fontfamily

@@ -1,7 +1,7 @@
 <template lang="pug">
-v-stage(ref="stage" :config="configKonva" @mousedown="handleStageMouseDown")
+v-stage(ref="stage" :config="konvaConfig" @mousedown="handleStageMouseDown")
   v-layer
-    v-image(:config="configImage")
+    v-image(:config="cardImageConfig")
     konva-text(v-for="(conf, i) in textConfigs" :key="`text-${i}`" :config="conf" :scale="scale")
     v-transformer(ref="transformer")
 </template>
@@ -17,15 +17,15 @@ import { KonvaConfig, KonvaImageConfig, KonvaTextConfig } from '~/types'
 })
 export default class Sheet extends Vue {
   vm: any
-  imageObj: HTMLImageElement = new Image()
+  cardImageObj: HTMLImageElement = new Image()
   selectedShapeName: string = ''
 
   @Prop({ required: true })
-  readonly image!: string
+  readonly cardSelect!: string
   @Prop({ default: 800 })
-  readonly width!: number
+  readonly cardWidth!: number
   @Prop({ default: 1200 })
-  readonly height!: number
+  readonly cardHeight!: number
   @Prop({ default: 1 })
   readonly scale!: number
   @Prop({ required: true })
@@ -44,11 +44,11 @@ export default class Sheet extends Vue {
   readonly onlineNameColor!: string
 
   @Watch('image')
-  onImageChanged(val: string): void {
+  onCardImageChanged(val: string): void {
     const stage = this.vm.$refs.stage.getNode()
-    this.imageObj.src = val
-    this.imageObj.onload = () => {
-      this.imageObj = this.imageObj
+    this.cardImageObj.src = val
+    this.cardImageObj.onload = () => {
+      this.cardImageObj = this.cardImageObj
       stage.draw()
       this.$emit('changed', { dataUrl: stage.toDataURL() })
     }
@@ -60,21 +60,21 @@ export default class Sheet extends Vue {
   @Watch('twitterIdColor')
   @Watch('onlineName')
   @Watch('onlineNameColor')
-  onChangedNickname(val: string): void {
-    this.onImageChanged(this.image)
+  onChangedText(val: string): void {
+    this.onCardImageChanged(this.cardSelect)
   }
 
-  get configKonva(): KonvaConfig {
+  get konvaConfig(): KonvaConfig {
     return {
-      width: this.width * this.scale,
-      height: this.height * this.scale
+      width: this.cardWidth * this.scale,
+      height: this.cardHeight * this.scale
     }
   }
-  get configImage(): KonvaImageConfig {
+  get cardImageConfig(): KonvaImageConfig {
     return {
-      image: this.imageObj,
-      width: this.configKonva.width,
-      height: this.configKonva.height
+      image: this.cardImageObj,
+      width: this.konvaConfig.width,
+      height: this.konvaConfig.height
     }
   }
   get textConfigs(): KonvaTextConfig[] {
@@ -114,7 +114,7 @@ export default class Sheet extends Vue {
 
   mounted() {
     this.vm = this
-    if (this.image) this.onImageChanged(this.image)
+    if (this.cardSelect) this.onCardImageChanged(this.cardSelect)
   }
 
   /**

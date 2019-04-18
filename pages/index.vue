@@ -2,7 +2,7 @@
 v-layout(column justify-center align-center)
   v-flex(xs12 sm8 md6)
     sheet(
-      :image="cardType"
+      :card-select="cardSelect"
       :scale="scale"
       :width="profileCardImageSize.width"
       :height="profileCardImageSize.heith"
@@ -29,7 +29,7 @@ const height: number = window.innerHeight
   },
   computed: {
     ...mapState('edit-tool', [
-      'cardType',
+      'cardSelect',
       'fontfamily',
       'nickname',
       'nicknameColor',

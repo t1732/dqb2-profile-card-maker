@@ -2,8 +2,8 @@
 v-app
   edit-tool-drawer(
     v-model="drawerOpen"
-    :select.sync="selectCardType"
-    :items="cardTypeItems"
+    :card-select.sync="cardSelect"
+    :card-items="cardItems"
     :fontfamily.sync="selectFontfamily"
     :nickname.sync="inputNickname"
     :nickname-color.sync="inputNicknameColor"
@@ -38,8 +38,8 @@ import { Component, Vue } from 'vue-property-decorator'
   computed: {
     ...mapState('drawer', ['open']),
     ...mapState('edit-tool', [
-      'cardType',
-      'cardTypeItems',
+      'cardSelect',
+      'cardItems',
       'fontfamily',
       'nickname',
       'nicknameColor',
@@ -52,7 +52,7 @@ import { Component, Vue } from 'vue-property-decorator'
   methods: {
     ...mapMutations('drawer', ['setOpen']),
     ...mapMutations('edit-tool', [
-        'setCardType',
+        'setCardSelect',
         'setFontfamily',
         'setNickname',
         'setNicknameColor',
@@ -74,11 +74,11 @@ export default class Default extends Vue {
   set drawerOpen (val: boolean) {
     this['setOpen'](val)
   }
-  get selectCardType (): string {
-    return this['cardType']
+  get selectCardSelect (): string {
+    return this['cardSelect']
   }
-  set selectCardType (val: string) {
-    this['setCardType'](val)
+  set selectCardSelect (val: string) {
+    this['setCardSelect'](val)
   }
   get selectFontfamily (): string {
     return this['fontfamily']
