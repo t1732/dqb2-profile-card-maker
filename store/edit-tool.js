@@ -12,7 +12,9 @@ export const state = () => ({
   nickname: "",
   nicknameColor: DEFAULT_TEXT_COLOR,
   twitterId: "",
-  twitterIdColor: DEFAULT_TEXT_COLOR
+  twitterIdColor: DEFAULT_TEXT_COLOR,
+  onlineName: "",
+  onlineNameColor: DEFAULT_TEXT_COLOR
 })
 
 export const getters = {
@@ -27,5 +29,7 @@ export const mutations = {
   setNickname: (state, val) => state.nickname = val,
   setNicknameColor: (state, val) => state.nicknameColor = val,
   setTwitterId: (state, val) => state.twitterId = val,
-  setTwitterIdColor: (state, val) => state.twitterIdColor = val
+  setTwitterIdColor: (state, val) => state.twitterIdColor = val,
+  setOnlineName: (state, val) => state.onlineName = val,
+  setOnlineNameColor: (state, val) => state.onlineNameColor = val
 }

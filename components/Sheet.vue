@@ -38,6 +38,10 @@ export default class Sheet extends Vue {
   readonly twitterId!: string
   @Prop({ required: true })
   readonly twitterIdColor!: string
+  @Prop({ required: true })
+  readonly onlineName!: string
+  @Prop({ required: true })
+  readonly onlineNameColor!: string
 
   @Watch('image')
   onImageChanged(val: string): void {
@@ -54,6 +58,8 @@ export default class Sheet extends Vue {
   @Watch('nicknameColor')
   @Watch('twitterId')
   @Watch('twitterIdColor')
+  @Watch('onlineName')
+  @Watch('onlineNameColor')
   onChangedNickname(val: string): void {
     this.onImageChanged(this.image)
   }
@@ -91,6 +97,16 @@ export default class Sheet extends Vue {
         fontFamily: this.fontfamily,
         text: this.twitterId,
         fill: this.twitterIdColor,
+        draggable: true
+      },
+      {
+        name: 'onlineName',
+        x: 320,
+        y: 245,
+        fontSize: 24,
+        fontFamily: this.fontfamily,
+        text: this.onlineName,
+        fill: this.onlineNameColor,
         draggable: true
       }
     ]

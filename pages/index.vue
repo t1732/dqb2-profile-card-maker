@@ -11,6 +11,8 @@ v-layout(column justify-center align-center)
       :nickname-color="nicknameColor"
       :twitter-id="twitterId"
       :twitter-id-color="twitterIdColor"
+      :online-name="onlineName"
+      :online-name-color="onlineNameColor"
       @changed="onChangedSheet")
 </template>
 
@@ -31,7 +33,9 @@ const height: number = window.innerHeight
       'fontfamily',
       'nickname',
       'nicknameColor',
-      'twitterIdColor'
+      'twitterIdColor',
+      'onlineName',
+      'onlineNameColor'
     ]),
     ...mapGetters('edit-tool', ['twitterId'])
   },

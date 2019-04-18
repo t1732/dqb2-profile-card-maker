@@ -9,6 +9,8 @@ v-app
     :nickname-color.sync="inputNicknameColor"
     :twitter-id.sync="inputTwitterId"
     :twitter-id-color.sync="inputTwitterIdColor"
+    :online-name.sync="inputOnlineName"
+    :online-name-color.sync="inputOnlineNameColor"
     @close="close")
   v-toolbar(fixed app color="primary")
     v-toolbar-title(v-text="title")
@@ -42,8 +44,10 @@ import { Component, Vue } from 'vue-property-decorator'
       'nickname',
       'nicknameColor',
       'twitterId',
-      'twitterIdColor'
-    ]),
+      'twitterIdColor',
+      'onlineName',
+      'onlineNameColor'
+    ])
   },
   methods: {
     ...mapMutations('drawer', ['setOpen']),
@@ -53,7 +57,9 @@ import { Component, Vue } from 'vue-property-decorator'
         'setNickname',
         'setNicknameColor',
         'setTwitterId',
-        'setTwitterIdColor'
+        'setTwitterIdColor',
+        'setOnlineName',
+        'setOnlineNameColor'
       ]),
     ...mapActions('drawer', ['toggle']),
     ...mapActions('sheet', ['download'])
@@ -68,21 +74,18 @@ export default class Default extends Vue {
   set drawerOpen (val: boolean) {
     this['setOpen'](val)
   }
-
   get selectCardType (): string {
     return this['cardType']
   }
   set selectCardType (val: string) {
     this['setCardType'](val)
   }
-
   get selectFontfamily (): string {
     return this['fontfamily']
   }
   set selectFontfamily (val: string) {
     this['setFontfamily'](val)
   }
-
   get inputNickname (): string {
     return this['nickname']
   }
@@ -106,6 +109,18 @@ export default class Default extends Vue {
   }
   set inputTwitterIdColor (val: string) {
     this['setTwitterIdColor'](val)
+  }
+  get inputOnlineName (): string {
+    return this['onlineName']
+  }
+  set inputOnlineName (val: string) {
+    this['setOnlineName'](val)
+  }
+  get inputOnlineNameColor (): string {
+    return this['onlineNameColor']
+  }
+  set inputOnlineNameColor (val: string) {
+    this['setOnlineNameColor'](val)
   }
 
   close (): void {

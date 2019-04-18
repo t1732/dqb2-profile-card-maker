@@ -31,6 +31,12 @@ v-navigation-drawer.editTool_drawer(v-model="localValue" right app dark :width="
         :label="twitterIdLabel"
         :color.sync="localTwitterIdColor"
         outline)
+    v-flex(xs12)
+      text-field-set(
+        v-model="localOnlineName"
+        :label="onlineNameLabel"
+        :color.sync="localOnlineNameColor"
+        outline)
 </template>
 
 <script lang="ts">
@@ -44,9 +50,11 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 export default class Credit extends Vue {
   width: number = 300
   title: string = "編集ツール"
+  fontfamilyLabel: string = "フォント"
   selectorLabel: string = "カードタイプ"
   nicknameLabel: string = "ニックネーム"
   twitterIdLabel: string = "Twitter ID"
+  onlineNameLabel: string = "オンライン名"
 
   @Prop({ default: false })
   value!: boolean
@@ -55,6 +63,8 @@ export default class Credit extends Vue {
   @Prop({ default: () => ([]) })
   items!: {[s: string]: string}
   @Prop({ required: true })
+  fontfamily!: string
+  @Prop({ required: true })
   nickname!: string
   @Prop({ required: true })
   nicknameColor!: string
@@ -62,6 +72,10 @@ export default class Credit extends Vue {
   twitterId!: string
   @Prop({ required: true })
   twitterIdColor!: string
+  @Prop({ required: true })
+  onlineName!: string
+  @Prop({ required: true })
+  onlineNameColor!: string
 
   get localValue (): boolean {
     return this.value
@@ -76,11 +90,6 @@ export default class Credit extends Vue {
   set localSelect (val: string) {
     this.$emit('update:select', val)
   }
-
-
-  fontfamilyLabel: string = "フォント"
-  @Prop({ required: true })
-  fontfamily!: string
   get localFontfamily (): string {
     return this.fontfamily
   }
@@ -90,8 +99,6 @@ export default class Credit extends Vue {
   get fontfamilyItems (): string[] {
     return ['M PLUS', 'Sawarabi Gothic', 'Noto Sans JP', 'Kosugi', 'Kosugi Maru', 'Nico Moji']
   }
-
-
   get localNickname (): string {
     return this.nickname
   }
@@ -115,6 +122,18 @@ export default class Credit extends Vue {
   }
   set localTwitterIdColor (val: string) {
     this.$emit('update:twitterIdColor', val)
+  }
+  get localOnlineName(): string {
+    return this.onlineName
+  }
+  set localOnlineName(val: string) {
+    this.$emit('update:onlineName', val)
+  }
+  get localOnlineNameColor(): string {
+    return this.onlineNameColor
+  }
+  set localOnlineNameColor(val: string) {
+    this.$emit('update:onlineNameColor', val)
   }
 
   onClose (): void {
