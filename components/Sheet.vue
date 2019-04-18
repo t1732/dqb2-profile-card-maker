@@ -1,16 +1,16 @@
 <template lang="pug">
-v-stage(ref="stage" :config="configKonva")
+v-stage(ref="stage" :config="configKonva" @mousedown="handleStageMouseDown")
   v-layer
     v-image(:config="configImage")
-    konva-text(ref="nickname" :config="nicknameConfig" :scale="scale")
-    konva-text(ref="twitterId" :config="twitterIdConfig" :scale="scale")
+    konva-text(v-for="(conf, i) in textConfigs" :key="`text-${i}`" :config="conf" :scale="scale")
+    v-transformer(ref="transformer")
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
-let vm: any = {}
 
 interface Config {
+  name?: string
   width: number
   height: number
 }
@@ -20,12 +20,14 @@ interface ImageConfig extends Config {
 }
 
 interface TextConfig {
+  name?: string
   x: number
   y: number
   fontSize: number
   fontFamily: string
   text: string,
-  fill: string
+  fill: string,
+  draggable?: boolean
 }
 
 @Component({
@@ -33,8 +35,10 @@ interface TextConfig {
     KonvaText: () => import('~/components/KonvaText.vue')
   }
 })
-export default class Credit extends Vue {
+export default class Sheet extends Vue {
+  vm: any
   imageObj: HTMLImageElement = new Image()
+  selectedShapeName: string = ''
 
   @Prop({ required: true })
   readonly image!: string
@@ -57,7 +61,7 @@ export default class Credit extends Vue {
 
   @Watch('image')
   onImageChanged(val: string): void {
-    const stage = vm.$refs.stage.getNode()
+    const stage = this.vm.$refs.stage.getNode()
     this.imageObj.src = val
     this.imageObj.onload = () => {
       this.imageObj = this.imageObj
@@ -70,7 +74,7 @@ export default class Credit extends Vue {
   @Watch('nicknameColor')
   @Watch('twitterId')
   @Watch('twitterIdColor')
-  onChangedNickname (val: string): void {
+  onChangedNickname(val: string): void {
     this.onImageChanged(this.image)
   }
 
@@ -87,30 +91,72 @@ export default class Credit extends Vue {
       height: this.configKonva.height
     }
   }
-  get nicknameConfig(): TextConfig {
-    return {
-      x: 270,
-      y: 145,
-      fontSize: 28,
-      fontFamily: this.fontfamily,
-      text: this.nickname,
-      fill: this.nicknameColor
-    }
-  }
-  get twitterIdConfig(): TextConfig {
-    return {
-      x: 320,
-      y: 195,
-      fontSize: 24,
-      fontFamily: this.fontfamily,
-      text: this.twitterId,
-      fill: this.twitterIdColor
-    }
+  get textConfigs(): TextConfig[] {
+    return [
+      {
+        name: 'nickname',
+        x: 270,
+        y: 145,
+        fontSize: 28,
+        fontFamily: this.fontfamily,
+        text: this.nickname,
+        fill: this.nicknameColor,
+        draggable: true
+      },
+      {
+        name: 'twitterId',
+        x: 320,
+        y: 195,
+        fontSize: 24,
+        fontFamily: this.fontfamily,
+        text: this.twitterId,
+        fill: this.twitterIdColor,
+        draggable: true
+      }
+    ]
   }
 
   mounted() {
-    vm = this
+    this.vm = this
     if (this.image) this.onImageChanged(this.image)
   }
+
+  /** マウスクリックハンドラー */
+  handleStageMouseDown(e) {  // https://konvajs.org/docs/vue/Transformer.html
+      if (e.target === e.target.getStage()) {
+        this.selectedShapeName = ''
+        this.updateTransformer()
+        return
+      }
+
+      if (e.target.getParent().className === 'Transformer') {
+        return
+      }
+
+      const name: string = e.target.name()
+      const config: TextConfig | undefined = this.textConfigs.find(r => r.name === name);
+      if (config) {
+        this.selectedShapeName = config.name as string
+      } else {
+        this.selectedShapeName = ''
+      }
+      this.updateTransformer()
+  }
+  /** konva transform 更新 */
+  updateTransformer(): void {
+      const transformerNode = this.vm.$refs.transformer.getStage()
+      const stage = transformerNode.getStage()
+
+      const selectedNode = stage.findOne('.' + this.selectedShapeName)
+      if (selectedNode === transformerNode.node()) {
+        return
+      }
+      if (selectedNode) {
+        transformerNode.attachTo(selectedNode)
+      } else {
+        transformerNode.detach()
+      }
+      transformerNode.getLayer().batchDraw()
+    }
 }
 </script>
