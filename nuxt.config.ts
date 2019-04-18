@@ -59,7 +59,7 @@ const config: NuxtConfiguration = {
   */
   modules: [
     ['@nuxtjs/google-analytics', {
-      id: 'UA-3880329-7'
+      id: process.env.GA_TRACKING_ID
     }]
   ],
 
