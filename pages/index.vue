@@ -17,6 +17,12 @@ v-layout(column justify-center align-center)
       :favorite-free="favoriteFree"
       :build-style="buildStyle"
       :free-text="freeText"
+      :follow="follow"
+      :chat-ok="chatOk"
+      :want-impression="wantImpression"
+      :come-to-look="comeToLook"
+      :multiplay-ps4="multiplayPs4"
+      :multiplay-switch="multiplaySwitch"
       @changed="onChangedSheet")
 </template>
 
@@ -43,7 +49,13 @@ const height: number = window.innerHeight
       'favoriteBlock',
       'favoriteFree',
       'buildStyle',
-      'freeText'
+      'freeText',
+      'follow',
+      'chatOk',
+      'wantImpression',
+      'comeToLook',
+      'multiplayPs4',
+      'multiplaySwitch'
     ]),
     ...mapGetters('edit-tool', ['twitterId'])
   },

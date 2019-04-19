@@ -13,7 +13,13 @@ export const state = () => ({
   favoriteBlock: "",
   favoriteFree: "",
   buildStyle: "",
-  freeText: ""
+  freeText: "",
+  follow: false,
+  chatOk: false,
+  wantImpression: false,
+  comeToLook: false,
+  multiplayPs4: false,
+  multiplaySwitch: false
 })
 
 export const getters = {
@@ -34,5 +40,11 @@ export const mutations = {
   setFavoriteBlock: (state, val) => state.favoriteBlock = val,
   setFavoriteFree: (state, val) => state.favoriteFree = val,
   setBuildStyle: (state, val) => state.buildStyle = val,
-  setFreeText: (state, val) => state.freeText = val
+  setFreeText: (state, val) => state.freeText = val,
+  setFollow: (state, val) => state.follow = val,
+  setChatOk: (state, val) => state.chatOk = val,
+  setWantImpression: (state, val) => state.wantImpression = val,
+  setComeToLook: (state, val) => state.comeToLook = val,
+  setMultiplayPs4: (state, val) => state.multiplayPs4 = val,
+  setMultiplaySwitch: (state, val) => state.multiplaySwitch = val
 }

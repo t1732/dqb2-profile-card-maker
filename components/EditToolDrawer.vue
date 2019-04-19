@@ -1,12 +1,12 @@
 <template lang="pug">
-v-navigation-drawer.editTool_drawer(v-model="localValue" right app dark :width="width")
+v-navigation-drawer.editTool_drawer(v-model="localValue" right app :width="width")
   v-toolbar.transparent(color="primary")
     v-toolbar-title.black--text(v-text="title")
     v-spacer
     v-btn(icon @click.stop="onClose")
       v-icon(v-text="$vuetify.icons.edit_tool_close" color="black")
   v-divider
-  v-layout.pa-3(column)
+  v-layout.pa-3.editTool_form(column)
     v-flex(xs12)
       card-type-select(v-model="localCardSelect" :label="cardSelectLabel" outline)
     v-flex(xs12)
@@ -19,6 +19,14 @@ v-navigation-drawer.editTool_drawer(v-model="localValue" right app dark :width="
       text-field(v-model="localOnlineName" :label="onlineNameLabel")
     v-flex(xs12)
       text-field(v-model="localOnlineId" :label="onlineIdLabel")
+    v-flex(xs12)
+      v-card.pa-2.mb-4(color="secondary lighten-1")
+        check-box.mt-2(v-model="localFollow" :label="followLabel")
+        check-box.my-0(v-model="localChatOk" :label="chatOkLabel")
+        check-box.my-0(v-model="localWantImpression" :label="wantImpressionLabel")
+        check-box.my-0(v-model="localComeToLook" :label="comeToLookLabel")
+        check-box.my-0(v-model="localMultiplayPs4" :label="multiplayPs4Label")
+        check-box.my-0(v-model="localMultiplaySwitch" :label="multiplaySwitchLabel")
     v-flex(xs12)
       text-area(v-model="localFavoriteCharacter" :label="favoriteCharacterLabel")
     v-flex(xs12)
@@ -37,6 +45,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 @Component({
   components: {
     CardTypeSelect: () => import('~/components/CardTypeSelect.vue'),
+    CheckBox: () => import('~/components/CheckBox.vue'),
     FontSelect: () => import('~/components/FontSelect.vue'),
     TextArea: () => import('~/components/TextArea.vue'),
     TextField: () => import('~/components/TextField.vue')
@@ -56,6 +65,12 @@ export default class Credit extends Vue {
   favoriteFreeLabel: string = "すきな○○○"
   buildStyleLabel: string = "けんちくスタイル"
   freeTextLabel: string = "じゆうらん"
+  followLabel: string = "相互フォロー"
+  chatOkLabel: string = "雑談OK"
+  wantImpressionLabel: string = "感想ほしいです"
+  comeToLookLabel: string = "島を見に来て！"
+  multiplayPs4Label: string = "マルチしよう(Playstation®4)"
+  multiplaySwitchLabel: string = "マルチしよう(NintendoSwitch™)"
 
   @Prop({ default: false })
   value!: boolean
@@ -83,6 +98,18 @@ export default class Credit extends Vue {
   buildStyle!: string
   @Prop({ required: true })
   freeText!: string
+  @Prop({ required: true })
+  follow!: boolean
+  @Prop({ required: true })
+  chatOk!: boolean
+  @Prop({ required: true })
+  wantImpression!: boolean
+  @Prop({ required: true })
+  comeToLook!: boolean
+  @Prop({ required: true })
+  multiplayPs4!: boolean
+  @Prop({ required: true })
+  multiplaySwitch!: boolean
 
   get localValue (): boolean {
     return this.value
@@ -162,6 +189,42 @@ export default class Credit extends Vue {
   set localFreeText(val: string) {
     this.$emit('update:freeText', val)
   }
+  get localFollow(): boolean {
+    return this.follow
+  }
+  set localFollow(val: boolean) {
+    this.$emit('update:follow', val)
+  }
+  get localChatOk(): boolean {
+    return this.chatOk
+  }
+  set localChatOk(val: boolean) {
+    this.$emit('update:chatOk', val)
+  }
+  get localWantImpression(): boolean {
+    return this.wantImpression
+  }
+  set localWantImpression(val: boolean) {
+    this.$emit('update:wantImpression', val)
+  }
+  get localComeToLook(): boolean {
+    return this.comeToLook
+  }
+  set localComeToLook(val: boolean) {
+    this.$emit('update:comeToLook', val)
+  }
+  get localMultiplayPs4(): boolean {
+    return this.multiplayPs4
+  }
+  set localMultiplayPs4(val: boolean) {
+    this.$emit('update:multiplayPs4', val)
+  }
+  get localMultiplaySwitch(): boolean {
+    return this.multiplaySwitch
+  }
+  set localMultiplaySwitch(val: boolean) {
+    this.$emit('update:multiplaySwitch', val)
+  }
 
   onClose (): void {
     this.$emit('close')
@@ -170,6 +233,6 @@ export default class Credit extends Vue {
 </script>
 
 <style lang="stylus" scoped>
-.editTool_drawer
+.editTool_form
   background-color var(--v-secondary-base)
 </style>

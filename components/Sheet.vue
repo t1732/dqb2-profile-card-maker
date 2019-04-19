@@ -50,6 +50,18 @@ export default class Sheet extends Vue {
   readonly buildStyle!: string
   @Prop({ required: true })
   readonly freeText!: string
+  @Prop({ required: true })
+  readonly follow!: boolean
+  @Prop({ required: true })
+  readonly chatOk!: boolean
+  @Prop({ required: true })
+  readonly wantImpression!: boolean
+  @Prop({ required: true })
+  readonly comeToLook!: boolean
+  @Prop({ required: true })
+  readonly multiplayPs4!: boolean
+  @Prop({ required: true })
+  readonly multiplaySwitch!: boolean
 
   @Watch('image')
   onCardImageChanged(val: string): void {
@@ -73,6 +85,12 @@ export default class Sheet extends Vue {
   @Watch('favoriteFree')
   @Watch('buildStyle')
   @Watch('freeText')
+  @Watch('follow')
+  @Watch('chatOk')
+  @Watch('wantImpression')
+  @Watch('comeToLook')
+  @Watch('multiplayPs4')
+  @Watch('multiplaySwitch')
   onChangedText(val: string): void {
     this.onCardImageChanged(this.cardSelect)
   }
@@ -181,6 +199,76 @@ export default class Sheet extends Vue {
         text: this.freeText,
         fill: this.fontColor,
         draggable: true
+      },
+      {
+        name: 'follow',
+        x: 160,
+        y: 370,
+        fontSize: 20,
+        fontFamily: this.fontfamily,
+        text: this.follow ? "✔" : "",
+        fill: this.fontColor,
+        draggable: false
+      },
+      {
+        name: 'chatOk',
+        x: 305,
+        y: 370,
+        fontSize: 20,
+        fontFamily: this.fontfamily,
+        text: this.chatOk ? "✔" : "",
+        fill: this.fontColor,
+        draggable: false
+      },
+      {
+        name: 'wantImpression',
+        x: 415,
+        y: 370,
+        fontSize: 20,
+        fontFamily: this.fontfamily,
+        text: this.wantImpression ? "✔" : "",
+        fill: this.fontColor,
+        draggable: false
+      },
+      {
+        name: 'comeToLook',
+        x: 576,
+        y: 370,
+        fontSize: 20,
+        fontFamily: this.fontfamily,
+        text: this.comeToLook ? "✔" : "",
+        fill: this.fontColor,
+        draggable: false
+      },
+      {
+        name: 'multiplay',
+        x: 160,
+        y: 402,
+        fontSize: 20,
+        fontFamily: this.fontfamily,
+        text: (this.multiplayPs4 || this.multiplaySwitch) ? "✔" : "",
+        fill: this.fontColor,
+        draggable: false
+      },
+      {
+        name: 'multiplayPs4',
+        x: 360,
+        y: 400,
+        fontSize: 32,
+        fontFamily: this.fontfamily,
+        text: this.multiplayPs4 ? "○" : "",
+        fill: this.fontColor,
+        draggable: false
+      },
+      {
+        name: 'multiplaySwitch',
+        x: 525,
+        y: 400,
+        fontSize: 32,
+        fontFamily: this.fontfamily,
+        text: this.multiplaySwitch ? "○" : "",
+        fill: this.fontColor,
+        draggable: false
       }
     ]
   }

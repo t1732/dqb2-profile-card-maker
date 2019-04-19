@@ -14,6 +14,12 @@ v-app
     :favorite-free.sync="localFavoriteFree"
     :build-style.sync="localBuildStyle"
     :free-text.sync="localFreeText"
+    :follow.sync="localFollow"
+    :chat-ok.sync="localChatOk"
+    :want-impression.sync="localWantImpression"
+    :come-to-look.sync="localComeToLook"
+    :multiplay-ps4.sync="localMultiplayPs4"
+    :multiplay-switch.sync="localMultiplaySwitch"
     @close="close")
   v-toolbar(fixed app clipped-right color="primary")
     v-toolbar-title(v-text="title")
@@ -51,7 +57,13 @@ import { Component, Vue } from 'vue-property-decorator'
       'favoriteBlock',
       'favoriteFree',
       'buildStyle',
-      'freeText'
+      'freeText',
+      'follow',
+      'chatOk',
+      'wantImpression',
+      'comeToLook',
+      'multiplayPs4',
+      'multiplaySwitch'
     ])
   },
   methods: {
@@ -68,7 +80,13 @@ import { Component, Vue } from 'vue-property-decorator'
       'setFavoriteBlock',
       'setFavoriteFree',
       'setBuildStyle',
-      'setFreeText'
+      'setFreeText',
+      'setFollow',
+      'setChatOk',
+      'setWantImpression',
+      'setComeToLook',
+      'setMultiplayPs4',
+      'setMultiplaySwitch'
     ]),
     ...mapActions('drawer', ['toggle']),
     ...mapActions('sheet', ['download'])
@@ -154,6 +172,42 @@ export default class Default extends Vue {
   }
   set localFreeText(val: string) {
     this['setFreeText'](val)
+  }
+  get localFollow(): boolean {
+    return this['follow']
+  }
+  set localFollow(val: boolean) {
+    this['setFollow'](val)
+  }
+  get localChatOk(): boolean {
+    return this['chatOk']
+  }
+  set localChatOk(val: boolean) {
+    this['setChatOk'](val)
+  }
+  get localWantImpression(): boolean {
+    return this['wantImpression']
+  }
+  set localWantImpression(val: boolean) {
+    this['setWantImpression'](val)
+  }
+  get localComeToLook(): boolean {
+    return this['comeToLook']
+  }
+  set localComeToLook(val: boolean) {
+    this['setComeToLook'](val)
+  }
+  get localMultiplayPs4(): boolean {
+    return this['multiplayPs4']
+  }
+  set localMultiplayPs4(val: boolean) {
+    this['setMultiplayPs4'](val)
+  }
+  get localMultiplaySwitch(): boolean {
+    return this['multiplaySwitch']
+  }
+  set localMultiplaySwitch(val: boolean) {
+    this['setMultiplaySwitch'](val)
   }
 
   close (): void {
