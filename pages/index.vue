@@ -11,6 +11,12 @@ v-layout(column justify-center align-center)
       :nickname="nickname"
       :twitter-id="twitterId"
       :online-name="onlineName"
+      :online-id="onlineId"
+      :favorite-character="favoriteCharacter"
+      :favorite-block="favoriteBlock"
+      :favorite-free="favoriteFree"
+      :build-style="buildStyle"
+      :free-text="freeText"
       @changed="onChangedSheet")
 </template>
 
@@ -31,7 +37,13 @@ const height: number = window.innerHeight
       'fontfamily',
       'fontColor',
       'nickname',
-      'onlineName'
+      'onlineName',
+      'onlineId',
+      'favoriteCharacter',
+      'favoriteBlock',
+      'favoriteFree',
+      'buildStyle',
+      'freeText'
     ]),
     ...mapGetters('edit-tool', ['twitterId'])
   },

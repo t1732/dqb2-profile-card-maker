@@ -17,6 +17,18 @@ v-navigation-drawer.editTool_drawer(v-model="localValue" right app dark :width="
       text-field(v-model="localTwitterId" :label="twitterIdLabel")
     v-flex(xs12)
       text-field(v-model="localOnlineName" :label="onlineNameLabel")
+    v-flex(xs12)
+      text-field(v-model="localOnlineId" :label="onlineIdLabel")
+    v-flex(xs12)
+      text-area(v-model="localFavoriteCharacter" :label="favoriteCharacterLabel")
+    v-flex(xs12)
+      text-area(v-model="localFavoriteBlock" :label="favoriteBlockLabel")
+    v-flex(xs12)
+      text-area(v-model="localFavoriteFree" :label="favoriteFreeLabel")
+    v-flex(xs12)
+      text-area(v-model="localBuildStyle" :label="buildStyleLabel")
+    v-flex(xs12)
+      text-area(v-model="localFreeText" :label="freeTextLabel" rows="4")
 </template>
 
 <script lang="ts">
@@ -26,6 +38,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
   components: {
     CardTypeSelect: () => import('~/components/CardTypeSelect.vue'),
     FontSelect: () => import('~/components/FontSelect.vue'),
+    TextArea: () => import('~/components/TextArea.vue'),
     TextField: () => import('~/components/TextField.vue')
   }
 })
@@ -37,6 +50,12 @@ export default class Credit extends Vue {
   nicknameLabel: string = "ニックネーム"
   twitterIdLabel: string = "Twitter ID"
   onlineNameLabel: string = "オンライン名"
+  onlineIdLabel: string = "とうこうしゃID"
+  favoriteCharacterLabel: string = "すきなキャラ"
+  favoriteBlockLabel: string = "すきなブロック/家具"
+  favoriteFreeLabel: string = "すきな○○○"
+  buildStyleLabel: string = "けんちくスタイル"
+  freeTextLabel: string = "じゆうらん"
 
   @Prop({ default: false })
   value!: boolean
@@ -52,6 +71,18 @@ export default class Credit extends Vue {
   twitterId!: string
   @Prop({ required: true })
   onlineName!: string
+  @Prop({ required: true })
+  onlineId!: string
+  @Prop({ required: true })
+  favoriteCharacter!: string
+  @Prop({ required: true })
+  favoriteBlock!: string
+  @Prop({ required: true })
+  favoriteFree!: string
+  @Prop({ required: true })
+  buildStyle!: string
+  @Prop({ required: true })
+  freeText!: string
 
   get localValue (): boolean {
     return this.value
@@ -94,6 +125,42 @@ export default class Credit extends Vue {
   }
   set localOnlineName(val: string) {
     this.$emit('update:onlineName', val)
+  }
+  get localOnlineId(): string {
+    return this.onlineId
+  }
+  set localOnlineId(val: string) {
+    this.$emit('update:onlineId', val)
+  }
+  get localFavoriteCharacter(): string {
+    return this.favoriteCharacter
+  }
+  set localFavoriteCharacter(val: string) {
+    this.$emit('update:favoriteCharacter', val)
+  }
+  get localFavoriteBlock(): string {
+    return this.favoriteBlock
+  }
+  set localFavoriteBlock(val: string) {
+    this.$emit('update:favoriteBlock', val)
+  }
+  get localFavoriteFree(): string {
+    return this.favoriteFree
+  }
+  set localFavoriteFree(val: string) {
+    this.$emit('update:favoriteFree', val)
+  }
+  get localBuildStyle(): string {
+    return this.buildStyle
+  }
+  set localBuildStyle(val: string) {
+    this.$emit('update:buildStyle', val)
+  }
+  get localFreeText(): string {
+    return this.freeText
+  }
+  set localFreeText(val: string) {
+    this.$emit('update:freeText', val)
   }
 
   onClose (): void {

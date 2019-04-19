@@ -8,6 +8,12 @@ v-app
     :nickname.sync="localNickname"
     :twitter-id.sync="localTwitterId"
     :online-name.sync="localOnlineName"
+    :online-id.sync="localOnlineId"
+    :favorite-character.sync="localFavoriteCharacter"
+    :favorite-block.sync="localFavoriteBlock"
+    :favorite-free.sync="localFavoriteFree"
+    :build-style.sync="localBuildStyle"
+    :free-text.sync="localFreeText"
     @close="close")
   v-toolbar(fixed app color="primary")
     v-toolbar-title(v-text="title")
@@ -39,19 +45,31 @@ import { Component, Vue } from 'vue-property-decorator'
       'fontfamily',
       'fontColor',
       'twitterId',
-      'onlineName'
+      'onlineName',
+      'onlineId',
+      'favoriteCharacter',
+      'favoriteBlock',
+      'favoriteFree',
+      'buildStyle',
+      'freeText'
     ])
   },
   methods: {
     ...mapMutations('drawer', ['setOpen']),
     ...mapMutations('edit-tool', [
-        'setCardSelect',
-        'setFontfamily',
-        'setFontColor',
-        'setNickname',
-        'setTwitterId',
-        'setOnlineName'
-      ]),
+      'setCardSelect',
+      'setFontfamily',
+      'setFontColor',
+      'setNickname',
+      'setTwitterId',
+      'setOnlineName',
+      'setOnlineId',
+      'setFavoriteCharacter',
+      'setFavoriteBlock',
+      'setFavoriteFree',
+      'setBuildStyle',
+      'setFreeText'
+    ]),
     ...mapActions('drawer', ['toggle']),
     ...mapActions('sheet', ['download'])
   }
@@ -100,6 +118,42 @@ export default class Default extends Vue {
   }
   set localOnlineName (val: string) {
     this['setOnlineName'](val)
+  }
+  get localOnlineId (): string {
+    return this['onlineId']
+  }
+  set localOnlineId (val: string) {
+    this['setOnlineId'](val)
+  }
+  get localFavoriteCharacter(): string {
+    return this['favoriteCharacter']
+  }
+  set localFavoriteCharacter(val: string) {
+    this['setFavoriteCharacter'](val)
+  }
+  get localFavoriteBlock(): string {
+    return this['favoriteBlock']
+  }
+  set localFavoriteBlock(val: string) {
+    this['setFavoriteBlock'](val)
+  }
+  get localFavoriteFree(): string {
+    return this['favoriteFree']
+  }
+  set localFavoriteFree(val: string) {
+    this['setFavoriteFree'](val)
+  }
+  get localBuildStyle(): string {
+    return this['buildStyle']
+  }
+  set localBuildStyle(val: string) {
+    this['setBuildStyle'](val)
+  }
+  get localFreeText(): string {
+    return this['freeText']
+  }
+  set localFreeText(val: string) {
+    this['setFreeText'](val)
   }
 
   close (): void {

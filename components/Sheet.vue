@@ -38,6 +38,18 @@ export default class Sheet extends Vue {
   readonly twitterId!: string
   @Prop({ required: true })
   readonly onlineName!: string
+  @Prop({ required: true })
+  readonly onlineId!: string
+  @Prop({ required: true })
+  readonly favoriteCharacter!: string
+  @Prop({ required: true })
+  readonly favoriteBlock!: string
+  @Prop({ required: true })
+  readonly favoriteFree!: string
+  @Prop({ required: true })
+  readonly buildStyle!: string
+  @Prop({ required: true })
+  readonly freeText!: string
 
   @Watch('image')
   onCardImageChanged(val: string): void {
@@ -55,6 +67,12 @@ export default class Sheet extends Vue {
   @Watch('nickname')
   @Watch('twitterId')
   @Watch('onlineName')
+  @Watch('onlineId')
+  @Watch('favoriteCharacter')
+  @Watch('favoriteBlock')
+  @Watch('favoriteFree')
+  @Watch('buildStyle')
+  @Watch('freeText')
   onChangedText(val: string): void {
     this.onCardImageChanged(this.cardSelect)
   }
@@ -101,6 +119,66 @@ export default class Sheet extends Vue {
         fontSize: 24,
         fontFamily: this.fontfamily,
         text: this.onlineName,
+        fill: this.fontColor,
+        draggable: true
+      },
+      {
+        name: 'onlineId',
+        x: 320,
+        y: 295,
+        fontSize: 24,
+        fontFamily: this.fontfamily,
+        text: this.onlineId,
+        fill: this.fontColor,
+        draggable: true
+      },
+      {
+        name: 'favoriteCharacter',
+        x: 30,
+        y: 470,
+        fontSize: 24,
+        fontFamily: this.fontfamily,
+        text: this.favoriteCharacter,
+        fill: this.fontColor,
+        draggable: true
+      },
+      {
+        name: 'favoriteBlock',
+        x: 415,
+        y: 470,
+        fontSize: 24,
+        fontFamily: this.fontfamily,
+        text: this.favoriteBlock,
+        fill: this.fontColor,
+        draggable: true
+      },
+      {
+        name: 'favoriteFree',
+        x: 30,
+        y: 560,
+        fontSize: 24,
+        fontFamily: this.fontfamily,
+        text: this.favoriteFree,
+        fill: this.fontColor,
+        draggable: true
+      },
+      {
+        name: 'buildStyle',
+        x: 415,
+        y: 560,
+        fontSize: 24,
+        fontFamily: this.fontfamily,
+        text: this.buildStyle,
+        fill: this.fontColor,
+        draggable: true
+      },
+      {
+        name: 'freeText',
+        x: 30,
+        y: 1045,
+        fontSize: 24,
+        fontFamily: this.fontfamily,
+        text: this.freeText,
         fill: this.fontColor,
         draggable: true
       }

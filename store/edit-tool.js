@@ -8,6 +8,12 @@ export const state = () => ({
   nickname: "",
   twitterId: "",
   onlineName: "",
+  onlineId: "",
+  favoriteCharacter: "",
+  favoriteBlock: "",
+  favoriteFree: "",
+  buildStyle: "",
+  freeText: ""
 })
 
 export const getters = {
@@ -22,5 +28,11 @@ export const mutations = {
   setFontColor: (state, val) => state.fontColor = val,
   setNickname: (state, val) => state.nickname = val,
   setTwitterId: (state, val) => state.twitterId = val,
-  setOnlineName: (state, val) => state.onlineName = val
+  setOnlineName: (state, val) => state.onlineName = val,
+  setOnlineId: (state, val) => state.onlineId = val,
+  setFavoriteCharacter: (state, val) => state.favoriteCharacter = val,
+  setFavoriteBlock: (state, val) => state.favoriteBlock = val,
+  setFavoriteFree: (state, val) => state.favoriteFree = val,
+  setBuildStyle: (state, val) => state.buildStyle = val,
+  setFreeText: (state, val) => state.freeText = val
 }
