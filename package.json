@@ -1,7 +1,7 @@
 {
-  "name": "builder_profile",
+  "name": "dqb2-profile-card-maker",
   "version": "1.0.0",
-  "description": "Dragonquest builders 2 profile card",
+  "description": "Dragonquest builders 2 profile card maker",
   "author": "euphton",
   "private": true,
   "scripts": {

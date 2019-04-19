@@ -1,6 +1,5 @@
 import NuxtConfiguration from '@nuxt/config'
 import VuetifyLoaderPlugin from 'vuetify-loader/lib/plugin'
-const pkg = require('./package.json')
 
 const config: NuxtConfiguration = {
   mode: 'spa',
@@ -9,11 +8,15 @@ const config: NuxtConfiguration = {
   ** Headers of the page
   */
   head: {
-    title: pkg.name,
+    title: "ドラゴンクエストビルダーズ2 じこしょうかいカード作成ツール",
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: pkg.description }
+      {
+        hid: 'description',
+        name: 'description',
+        content: "ドラゴンクエストビルダーズ2の公式配布ビルダーじこしょうかいカードの作成を支援するツールです"
+      }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
