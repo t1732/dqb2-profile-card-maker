@@ -69,8 +69,10 @@ export default class Sheet extends Vue {
     this.cardImageObj.src = val
     this.cardImageObj.onload = () => {
       this.cardImageObj = this.cardImageObj
-      stage.draw()
-      this.$emit('changed', { dataUrl: stage.toDataURL() })
+      this.$nextTick(() => {
+        stage.draw()
+        this.$emit('changed', { dataUrl: stage.toDataURL() })
+      })
     }
   }
   @Watch('cardSelect')
