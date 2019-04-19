@@ -15,7 +15,7 @@ v-app
     :build-style.sync="localBuildStyle"
     :free-text.sync="localFreeText"
     @close="close")
-  v-toolbar(fixed app color="primary")
+  v-toolbar(fixed app clipped-right color="primary")
     v-toolbar-title(v-text="title")
     v-spacer
     v-btn(icon @click.stop="toggle")
