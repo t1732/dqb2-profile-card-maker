@@ -1,7 +1,7 @@
 <template lang="pug">
 v-stage(ref="stage" :config="konvaConfig" @mousedown="handleStageMouseDown")
   v-layer
-    v-image(:config="cardImageConfig")
+    v-image(v-if="cardSelect" :config="cardImageConfig")
     konva-text(v-for="(conf, i) in textConfigs" :key="`text-${i}`" :config="conf" :scale="scale")
     v-transformer(ref="transformer")
 </template>
