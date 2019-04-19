@@ -15,7 +15,7 @@ v-layout(column justify-center align-center)
 </template>
 
 <script lang="ts">
-import { mapState, mapActions, mapGetters } from 'vuex'
+import { mapState, mapMutations, mapActions, mapGetters } from 'vuex'
 import { Component, Vue, Watch } from 'vue-property-decorator'
 
 const width: number = window.innerWidth
@@ -36,6 +36,7 @@ const height: number = window.innerHeight
     ...mapGetters('edit-tool', ['twitterId'])
   },
   methods: {
+    ...mapMutations('drawer', ['setOpen']),
     ...mapActions({
       onChangedSheet: 'sheet/onChanged'
     })
@@ -53,6 +54,10 @@ export default class Index extends Vue {
       return 1.0
     else
       return (width - (this.imageMargin * 2)) / this.profileCardImageSize.width
+  }
+
+  mounted () {
+    this['setOpen'](['lg', 'xl'].includes(this.$vuetify.breakpoint.name))
   }
 }
 </script>
