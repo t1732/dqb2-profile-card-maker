@@ -1,7 +1,7 @@
 <template lang="pug">
 v-stage(ref="stage" :config="konvaConfig" @mousedown="handleStageMouseDown")
   v-layer
-    v-image(v-if="sheetImage" :config="cardImageConfig")
+    v-image(v-if="isSheetLoaded" :config="cardImageConfig")
     konva-text(v-for="(conf, i) in textConfigs" :key="`text-${i}`" :config="conf" :scale="scale")
     v-transformer(ref="transformer")
 </template>
@@ -18,6 +18,7 @@ import { KonvaConfig, KonvaImageConfig, KonvaTextConfig } from '~/types'
 export default class Sheet extends Vue {
   vm: any
   cardImageObj: HTMLImageElement = new Image()
+  isSheetLoaded: boolean = false
   selectedShapeName: string = ''
 
   @Prop({ default: 800 })
@@ -73,6 +74,7 @@ export default class Sheet extends Vue {
       this.cardImageObj = this.cardImageObj
       this.$nextTick(() => {
         stage.draw()
+        this.isSheetLoaded = true
         this.$emit('changed', { dataUrl: stage.toDataURL() })
       })
     }
@@ -165,8 +167,7 @@ export default class Sheet extends Vue {
     }
 
     const name: string = e.target.name()
-    const config: KonvaTextConfig | undefined =
-      this.textConfigs.find(r => r.draggable && r.name === name)
+    const config: any = this.textConfigs.find(r => r.draggable && r.name === name)
     if (config) {
       this.selectedShapeName = config.name as string
     } else {

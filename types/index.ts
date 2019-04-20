@@ -19,5 +19,5 @@ export interface KonvaTextConfig {
   fontFamily: string
   text: string
   fill: string
-  draggable?: boolean
+  draggable: boolean
 }
