@@ -1,5 +1,5 @@
 <template lang="pug">
-v-text(ref="text" :config="scaledConfig")
+v-text(ref="text" :config="scaledConfig" @dragend="onDragedEnd")
 </template>
 
 <script lang="ts">
@@ -21,6 +21,10 @@ export default class KonvaText extends Vue {
       y: y * this.scale,
       fontSize: fontSize * this.scale
     })
+  }
+
+  onDragedEnd(event) {
+    this.$emit('dragend', event)
   }
 }
 </script>
