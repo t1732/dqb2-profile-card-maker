@@ -18,14 +18,6 @@ import { Chrome } from 'vue-color'
 })
 export default class FontSelect extends Vue {
   colors?: {[s: string]: string | number} = {}
-  items: string[] = [
-    'M PLUS',
-    'Sawarabi Gothic',
-    'Noto Sans JP',
-    'Kosugi',
-    'Kosugi Maru',
-    'Nico Moji'
-  ]
 
   @Prop({ required: true })
   value!: string
@@ -33,6 +25,8 @@ export default class FontSelect extends Vue {
   color!: string
   @Prop()
   label?: string
+  @Prop({ required: true, default: () => ([]) })
+  items!: string[]
 
   @Watch('colors')
   onChangedColors (val: {[s: string]: string | number}) {

@@ -2,8 +2,10 @@
 v-app
   edit-tool-drawer(
     v-model="drawerOpen"
-    :card-select.sync="localCardSelect"
-    :fontfamily.sync="localFontfamily"
+    :sheet-image.sync="localSheetImage"
+    :sheet-image-items="imageItems"
+    :font-family.sync="localFontFamily"
+    :font-family-items="fontFamilyItems"
     :font-color.sync="localFontColor"
     :nickname.sync="localNickname"
     :twitter-id.sync="localTwitterId"
@@ -35,7 +37,7 @@ v-app
 </template>
 
 <script lang="ts">
-import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+  import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
@@ -47,8 +49,8 @@ import { Component, Vue } from 'vue-property-decorator'
   computed: {
     ...mapState('drawer', ['open']),
     ...mapState('edit-tool', [
-      'cardSelect',
-      'fontfamily',
+      'sheetImage',
+      'fontFamily',
       'fontColor',
       'twitterId',
       'onlineName',
@@ -64,13 +66,22 @@ import { Component, Vue } from 'vue-property-decorator'
       'comeToLook',
       'multiplayPs4',
       'multiplaySwitch'
-    ])
+    ]),
+    ...mapGetters('sheet', [
+      'DEFAULT_IMAGE',
+      'imageItems'
+    ]),
+    ...mapGetters('font', {
+      DEFAULT_FONT_FAMILY: 'DEFAULT_FONT_FAMILY',
+      DEFAULT_FONT_COLOR: 'DEFAULT_FONT_COLOR',
+      fontFamilyItems: 'items'
+    })
   },
   methods: {
     ...mapMutations('drawer', ['setOpen']),
     ...mapMutations('edit-tool', [
-      'setCardSelect',
-      'setFontfamily',
+      'setSheetImage',
+      'setFontFamily',
       'setFontColor',
       'setNickname',
       'setTwitterId',
@@ -101,17 +112,17 @@ export default class Default extends Vue {
   set drawerOpen (val: boolean) {
     this['setOpen'](val)
   }
-  get localCardSelect (): string {
-    return this['cardSelect']
+  get localSheetImage (): string {
+    return this['sheetImage']
   }
-  set localCardSelect (val: string) {
-    this['setCardSelect'](val)
+  set localSheetImage (val: string) {
+    this['setSheetImage'](val)
   }
-  get localFontfamily (): string {
-    return this['fontfamily']
+  get localFontFamily (): string {
+    return this['fontFamily']
   }
-  set localFontfamily (val: string) {
-    this['setFontfamily'](val)
+  set localFontFamily (val: string) {
+    this['setFontFamily'](val)
   }
   get localFontColor (): string {
     return this['fontColor']
@@ -210,6 +221,12 @@ export default class Default extends Vue {
     this['setMultiplaySwitch'](val)
   }
 
+  created() {
+    this.localSheetImage = this['DEFAULT_IMAGE']
+    this.localFontFamily = this['DEFAULT_FONT_FAMILY']
+    this.localFontColor  = this['DEFAULT_FONT_COLOR']
+  }
+
   close (): void {
     this.drawerOpen = false
   }
@@ -220,3 +237,4 @@ export default class Default extends Vue {
 main
   background-color var(--v-secondary-base)
 </style>
+ae

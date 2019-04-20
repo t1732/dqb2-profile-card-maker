@@ -8,9 +8,9 @@ v-navigation-drawer.editTool_drawer(v-model="localValue" right app :width="width
   v-divider
   v-layout.pa-3.editTool_form(column)
     v-flex(xs12)
-      card-type-select(v-model="localCardSelect" :label="cardSelectLabel" outline)
+      sheet-select(v-model="localSheetImage" :label="sheetImageLabel" :items="sheetImageItems" outline)
     v-flex(xs12)
-      font-select(v-model="localFontfamily" :label="fontfamilyLabel" :color.sync="localFontColor")
+      font-select(v-model="localFontFamily" :label="fontFamilyLabel" :items="fontFamilyItems" :color.sync="localFontColor")
     v-flex(xs12)
       text-field(v-model="localNickname" :label="nicknameLabel")
     v-flex(xs12)
@@ -44,7 +44,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component({
   components: {
-    CardTypeSelect: () => import('~/components/CardTypeSelect.vue'),
+    SheetSelect: () => import('~/components/SheetSelect.vue'),
     CheckBox: () => import('~/components/CheckBox.vue'),
     FontSelect: () => import('~/components/FontSelect.vue'),
     TextArea: () => import('~/components/TextArea.vue'),
@@ -54,8 +54,8 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 export default class Credit extends Vue {
   width: number = 300
   title: string = "編集ツール"
-  cardSelectLabel: string = "カードタイプ"
-  fontfamilyLabel: string = "フォント"
+  sheetImageLabel: string = "カードタイプ"
+  fontFamilyLabel: string = "フォント"
   nicknameLabel: string = "ニックネーム"
   twitterIdLabel: string = "Twitter ID"
   onlineNameLabel: string = "オンライン名"
@@ -75,9 +75,13 @@ export default class Credit extends Vue {
   @Prop({ default: false })
   value!: boolean
   @Prop({ required: true })
-  cardSelect!: string
+  sheetImage!: string
   @Prop({ required: true })
-  fontfamily!: string
+  sheetImageItems!:{[s: string]: string}
+  @Prop({ required: true })
+  fontFamily!: string
+  @Prop({ required: true, default: () => ([]) })
+  fontFamilyItems!: string[]
   @Prop({ required: true })
   fontColor!: string
   @Prop({ required: true })
@@ -117,17 +121,17 @@ export default class Credit extends Vue {
   set localValue (val: boolean) {
     this.$emit('input', val)
   }
-  get localCardSelect (): string {
-    return this.cardSelect
+  get localSheetImage (): string {
+    return this.sheetImage
   }
-  set localCardSelect (val: string) {
-    this.$emit('update:cardSelect', val)
+  set localSheetImage (val: string) {
+    this.$emit('update:sheetImage', val)
   }
-  get localFontfamily (): string {
-    return this.fontfamily
+  get localFontFamily (): string {
+    return this.fontFamily
   }
-  set localFontfamily (val: string) {
-    this.$emit('update:fontfamily', val)
+  set localFontFamily (val: string) {
+    this.$emit('update:fontFamily', val)
   }
   get localFontColor (): string {
     return this.fontColor

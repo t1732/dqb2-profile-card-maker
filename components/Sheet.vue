@@ -1,7 +1,7 @@
 <template lang="pug">
 v-stage(ref="stage" :config="konvaConfig" @mousedown="handleStageMouseDown")
   v-layer
-    v-image(v-if="cardSelect" :config="cardImageConfig")
+    v-image(v-if="sheetImage" :config="cardImageConfig")
     konva-text(v-for="(conf, i) in textConfigs" :key="`text-${i}`" :config="conf" :scale="scale")
     v-transformer(ref="transformer")
 </template>
@@ -27,9 +27,11 @@ export default class Sheet extends Vue {
   @Prop({ default: 1 })
   readonly scale!: number
   @Prop({ required: true })
-  readonly cardSelect!: string
+  readonly defaultTextConfigMap!: {[s: string]: KonvaTextConfig }
   @Prop({ required: true })
-  readonly fontfamily!: string
+  readonly sheetImage!: string
+  @Prop({ required: true })
+  readonly fontFamily!: string
   @Prop({ required: true })
   readonly fontColor!: string
   @Prop({ required: true })
@@ -63,7 +65,7 @@ export default class Sheet extends Vue {
   @Prop({ required: true })
   readonly multiplaySwitch!: boolean
 
-  @Watch('image')
+  @Watch('sheetImage')
   onCardImageChanged(val: string): void {
     const stage = this.vm.$refs.stage.getNode()
     this.cardImageObj.src = val
@@ -75,8 +77,7 @@ export default class Sheet extends Vue {
       })
     }
   }
-  @Watch('cardSelect')
-  @Watch('fontfamily')
+  @Watch('fontFamily')
   @Watch('fontColor')
   @Watch('nickname')
   @Watch('twitterId')
@@ -94,7 +95,12 @@ export default class Sheet extends Vue {
   @Watch('multiplayPs4')
   @Watch('multiplaySwitch')
   onChangedText(val: string): void {
-    this.onCardImageChanged(this.cardSelect)
+    const stage = this.vm.$refs.stage.getNode()
+    this.cardImageObj = this.cardImageObj
+    this.$nextTick(() => {
+      stage.draw()
+      this.$emit('changed', { dataUrl: stage.toDataURL() })
+    })
   }
 
   get konvaConfig(): KonvaConfig {
@@ -111,173 +117,36 @@ export default class Sheet extends Vue {
     }
   }
   get textConfigs(): KonvaTextConfig[] {
-    return [
-      {
-        name: 'nickname',
-        x: 270,
-        y: 145,
-        fontSize: 28,
-        fontFamily: this.fontfamily,
-        text: this.nickname,
-        fill: this.fontColor,
-        draggable: true
-      },
-      {
-        name: 'twitterId',
-        x: 320,
-        y: 195,
-        fontSize: 24,
-        fontFamily: this.fontfamily,
-        text: this.twitterId,
-        fill: this.fontColor,
-        draggable: true
-      },
-      {
-        name: 'onlineName',
-        x: 320,
-        y: 245,
-        fontSize: 24,
-        fontFamily: this.fontfamily,
-        text: this.onlineName,
-        fill: this.fontColor,
-        draggable: true
-      },
-      {
-        name: 'onlineId',
-        x: 320,
-        y: 295,
-        fontSize: 24,
-        fontFamily: this.fontfamily,
-        text: this.onlineId,
-        fill: this.fontColor,
-        draggable: true
-      },
-      {
-        name: 'favoriteCharacter',
-        x: 30,
-        y: 470,
-        fontSize: 24,
-        fontFamily: this.fontfamily,
-        text: this.favoriteCharacter,
-        fill: this.fontColor,
-        draggable: true
-      },
-      {
-        name: 'favoriteBlock',
-        x: 415,
-        y: 470,
-        fontSize: 24,
-        fontFamily: this.fontfamily,
-        text: this.favoriteBlock,
-        fill: this.fontColor,
-        draggable: true
-      },
-      {
-        name: 'favoriteFree',
-        x: 30,
-        y: 560,
-        fontSize: 24,
-        fontFamily: this.fontfamily,
-        text: this.favoriteFree,
-        fill: this.fontColor,
-        draggable: true
-      },
-      {
-        name: 'buildStyle',
-        x: 415,
-        y: 560,
-        fontSize: 24,
-        fontFamily: this.fontfamily,
-        text: this.buildStyle,
-        fill: this.fontColor,
-        draggable: true
-      },
-      {
-        name: 'freeText',
-        x: 30,
-        y: 1045,
-        fontSize: 24,
-        fontFamily: this.fontfamily,
-        text: this.freeText,
-        fill: this.fontColor,
-        draggable: true
-      },
-      {
-        name: 'follow',
-        x: 160,
-        y: 370,
-        fontSize: 20,
-        fontFamily: this.fontfamily,
-        text: this.follow ? "✔" : "",
-        fill: this.fontColor,
-        draggable: false
-      },
-      {
-        name: 'chatOk',
-        x: 305,
-        y: 370,
-        fontSize: 20,
-        fontFamily: this.fontfamily,
-        text: this.chatOk ? "✔" : "",
-        fill: this.fontColor,
-        draggable: false
-      },
-      {
-        name: 'wantImpression',
-        x: 415,
-        y: 370,
-        fontSize: 20,
-        fontFamily: this.fontfamily,
-        text: this.wantImpression ? "✔" : "",
-        fill: this.fontColor,
-        draggable: false
-      },
-      {
-        name: 'comeToLook',
-        x: 576,
-        y: 370,
-        fontSize: 20,
-        fontFamily: this.fontfamily,
-        text: this.comeToLook ? "✔" : "",
-        fill: this.fontColor,
-        draggable: false
-      },
-      {
-        name: 'multiplay',
-        x: 160,
-        y: 402,
-        fontSize: 20,
-        fontFamily: this.fontfamily,
-        text: (this.multiplayPs4 || this.multiplaySwitch) ? "✔" : "",
-        fill: this.fontColor,
-        draggable: false
-      },
-      {
-        name: 'multiplayPs4',
-        x: 360,
-        y: 400,
-        fontSize: 32,
-        fontFamily: this.fontfamily,
-        text: this.multiplayPs4 ? "○" : "",
-        fill: this.fontColor,
-        draggable: false
-      },
-      {
-        name: 'multiplaySwitch',
-        x: 525,
-        y: 400,
-        fontSize: 32,
-        fontFamily: this.fontfamily,
-        text: this.multiplaySwitch ? "○" : "",
-        fill: this.fontColor,
-        draggable: false
+    return Object.keys(this.defaultTextConfigMap).map(key => {
+      const conf = Object.assign({}, this.defaultTextConfigMap[key], {
+        name: key,
+        fontFamily: this.fontFamily,
+        fill: this.fontColor
+      })
+
+      switch(key) {
+        case 'multiplay':
+          this.$set(conf, 'text', (this.multiplayPs4 || this.multiplaySwitch) ? "✔" : "")
+          break
+        case 'multiplayPs4':
+        case 'multiplaySwitch':
+          this.$set(conf, 'text', this[key] ? "○" : "")
+          break
+        default:
+          if (typeof this[key] === 'boolean') {
+            this.$set(conf, 'text', this[key] ? "✔" : "")
+          } else {
+            this.$set(conf, 'text', this[key])
+          }
       }
-    ]
+
+      return conf
+    })
   }
 
   mounted() {
     this.vm = this
-    if (this.cardSelect) this.onCardImageChanged(this.cardSelect)
+    if (this.sheetImage) this.onCardImageChanged(this.sheetImage)
   }
 
   /**

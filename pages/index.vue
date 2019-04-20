@@ -2,11 +2,12 @@
 v-layout(column justify-center align-center)
   v-flex(xs12 sm8 md6)
     sheet(
-      :card-select="cardSelect"
+      :sheet-image="sheetImage"
       :scale="scale"
       :width="profileCardImageSize.width"
       :height="profileCardImageSize.heith"
-      :fontfamily="fontfamily"
+      :default-text-config-map="defaultTextConfigMap"
+      :font-family="fontFamily"
       :font-color="fontColor"
       :nickname="nickname"
       :twitter-id="twitterId"
@@ -39,8 +40,8 @@ const height: number = window.innerHeight
   },
   computed: {
     ...mapState('edit-tool', [
-      'cardSelect',
-      'fontfamily',
+      'sheetImage',
+      'fontFamily',
       'fontColor',
       'nickname',
       'onlineName',
@@ -57,7 +58,8 @@ const height: number = window.innerHeight
       'multiplayPs4',
       'multiplaySwitch'
     ]),
-    ...mapGetters('edit-tool', ['twitterId'])
+    ...mapGetters('edit-tool', ['twitterId']),
+    ...mapGetters('sheet', ['defaultTextConfigMap'])
   },
   methods: {
     ...mapMutations('drawer', ['setOpen']),

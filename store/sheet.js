@@ -1,8 +1,123 @@
+import SheetImageF from '~/assets/image/DQB2CHARA_F.jpg'
+import SheetImageM from '~/assets/image/DQB2CHARA_M.jpg'
+
 const DOWNLOAD_FILE_NAME_PREFIX = 'dqb2-profile-card-dl'
 
 export const state = () => ({
   dataUrl: null
 })
+
+export const getters = {
+  DEFAULT_IMAGE() {
+    return SheetImageF
+  },
+  imageItems() {
+    return [
+      { value: SheetImageF, text: "じこしょうかい(♀)" },
+      { value: SheetImageM, text: "じこしょうかい(♂)" }
+    ]
+  },
+  defaultTextConfigMap() {
+    return {
+      nickname: {
+        x: 270,
+        y: 145,
+        fontSize: 28,
+        draggable: true
+      },
+      twitterId: {
+        x: 320,
+        y: 195,
+        fontSize: 24,
+        draggable: true
+      },
+      onlineName: {
+        x: 320,
+        y: 245,
+        fontSize: 24,
+        draggable: true
+      },
+      onlineId: {
+        x: 320,
+        y: 295,
+        fontSize: 24,
+        draggable: true
+      },
+      favoriteCharacter: {
+        x: 30,
+        y: 470,
+        fontSize: 24,
+        draggable: true
+      },
+      favoriteBlock: {
+        x: 415,
+        y: 470,
+        fontSize: 24,
+        draggable: true
+      },
+      favoriteFree: {
+        x: 30,
+        y: 560,
+        fontSize: 24,
+        draggable: true
+      },
+      buildStyle: {
+        x: 415,
+        y: 560,
+        fontSize: 24,
+        draggable: true
+      },
+      freeText: {
+        x: 30,
+        y: 1045,
+        fontSize: 24,
+        draggable: true
+      },
+      follow: {
+        x: 160,
+        y: 370,
+        fontSize: 20,
+        draggable: false
+      },
+      chatOk: {
+        x: 305,
+        y: 370,
+        fontSize: 20,
+        draggable: false
+      },
+      wantImpression: {
+        x: 415,
+        y: 370,
+        fontSize: 20,
+        draggable: false
+      },
+      comeToLook: {
+        x: 576,
+        y: 370,
+        fontSize: 20,
+        draggable: false
+      },
+      multiplay: {
+        x: 160,
+        y: 402,
+        fontSize: 20,
+        draggable: false
+      },
+      multiplayPs4: {
+        x: 360,
+        y: 400,
+        fontSize: 32,
+        draggable: false
+      },
+      multiplaySwitch: {
+        x: 525,
+        y: 400,
+        fontSize: 32,
+        draggable: false
+      }
+    }
+  }
+}
 
 export const mutations = {
   setDataUrl: (state, dataUrl) => state.dataUrl = dataUrl
