@@ -7,6 +7,8 @@ v-layout(column justify-center align-center)
       :width="profileCardImageSize.width"
       :height="profileCardImageSize.heith"
       :default-text-config-map="defaultTextConfigMap"
+      :default-portrait-image-config="defaultPortraitImageConfig"
+      :default-screen-shot-config="defaultScreenShotConfig"
       :font-family="fontFamily"
       :font-color="fontColor"
       :nickname="nickname"
@@ -24,6 +26,8 @@ v-layout(column justify-center align-center)
       :come-to-look="comeToLook"
       :multiplay-ps4="multiplayPs4"
       :multiplay-switch="multiplaySwitch"
+      :portrait-image="portraitImage"
+      :screen-shot="screenShot"
       @changed="onChangedSheet")
 </template>
 
@@ -56,10 +60,16 @@ const height: number = window.innerHeight
       'wantImpression',
       'comeToLook',
       'multiplayPs4',
-      'multiplaySwitch'
+      'multiplaySwitch',
+      'portraitImage',
+      'screenShot'
     ]),
     ...mapGetters('edit-tool', ['twitterId']),
-    ...mapGetters('sheet', ['defaultTextConfigMap'])
+    ...mapGetters('sheet', [
+      'defaultTextConfigMap',
+      'defaultPortraitImageConfig',
+      'defaultScreenShotConfig'
+    ])
   },
   methods: {
     ...mapMutations('drawer', ['setOpen']),

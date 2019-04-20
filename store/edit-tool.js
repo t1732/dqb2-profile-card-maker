@@ -16,7 +16,9 @@ export const state = () => ({
   wantImpression: false,
   comeToLook: false,
   multiplayPs4: false,
-  multiplaySwitch: false
+  multiplaySwitch: false,
+  portraitImage: null,
+  screenShot: null
 })
 
 export const getters = {
@@ -43,5 +45,7 @@ export const mutations = {
   setWantImpression: (state, val) => state.wantImpression = val,
   setComeToLook: (state, val) => state.comeToLook = val,
   setMultiplayPs4: (state, val) => state.multiplayPs4 = val,
-  setMultiplaySwitch: (state, val) => state.multiplaySwitch = val
+  setMultiplaySwitch: (state, val) => state.multiplaySwitch = val,
+  setPortraitImage: (state, val) => state.portraitImage = val,
+  setScreenShot: (state, val) => state.screenShot = val
 }

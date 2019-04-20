@@ -7,7 +7,9 @@ export interface KonvaImageConfig {
   name?: string
   width: number
   height: number
-  image: HTMLImageElement
+  x?: number
+  y?: number
+  image: HTMLImageElement | undefined | null
   draggable?: boolean
 }
 

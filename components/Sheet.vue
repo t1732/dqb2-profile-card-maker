@@ -2,6 +2,8 @@
 v-stage(ref="stage" :config="konvaConfig" @mousedown="handleStageMouseDown")
   v-layer
     v-image(v-if="isSheetLoaded" :config="cardImageConfig")
+    v-image(v-if="portraitImage" :config="portraitImageConfig" @dragend="onChangedPortraitImage")
+    v-image(v-if="screenShot" :config="screenShotConfig" @dragend="onChangedScreenShot")
     konva-text(v-for="(conf, i) in textConfigs" :key="`text-${i}`" :config="conf" :scale="scale")
     v-transformer(ref="transformer")
 </template>
@@ -29,6 +31,10 @@ export default class Sheet extends Vue {
   readonly scale!: number
   @Prop({ required: true })
   readonly defaultTextConfigMap!: {[s: string]: KonvaTextConfig }
+  @Prop({ required: true })
+  readonly defaultPortraitImageConfig!: KonvaTextConfig
+  @Prop({ required: true })
+  readonly defaultScreenShotConfig!: KonvaTextConfig
   @Prop({ required: true })
   readonly sheetImage!: string
   @Prop({ required: true })
@@ -65,6 +71,10 @@ export default class Sheet extends Vue {
   readonly multiplayPs4!: boolean
   @Prop({ required: true })
   readonly multiplaySwitch!: boolean
+  @Prop({ required: true })
+  readonly portraitImage?: HTMLImageElement
+  @Prop({ required: true })
+  readonly screenShot?: HTMLImageElement
 
   @Watch('sheetImage')
   onCardImageChanged(val: string): void {
@@ -78,6 +88,26 @@ export default class Sheet extends Vue {
         this.$emit('changed', { dataUrl: stage.toDataURL() })
       })
     }
+  }
+  @Watch('portraitImage')
+  onChangedPortraitImage(val: HTMLImageElement): void {
+    const stage = this.vm.$refs.stage.getNode()
+    this.cardImageObj = this.cardImageObj
+    this.portraitImageConfig.image = val
+    this.$nextTick(() => {
+      stage.draw()
+      this.$emit('changed', { dataUrl: stage.toDataURL() })
+    })
+  }
+  @Watch('screenShot')
+  onChangedScreenShot(val: HTMLImageElement): void {
+    const stage = this.vm.$refs.stage.getNode()
+    this.cardImageObj = this.cardImageObj
+    this.screenShotConfig.image = val
+    this.$nextTick(() => {
+      stage.draw()
+      this.$emit('changed', { dataUrl: stage.toDataURL() })
+    })
   }
   @Watch('fontFamily')
   @Watch('fontColor')
@@ -118,6 +148,16 @@ export default class Sheet extends Vue {
       height: this.konvaConfig.height
     }
   }
+  get portraitImageConfig(): KonvaImageConfig {
+    return Object.assign({}, this.defaultPortraitImageConfig, {
+      image: this.portraitImage
+    })
+  }
+  get screenShotConfig(): KonvaImageConfig {
+    return Object.assign({}, this.defaultScreenShotConfig, {
+      image: this.screenShot
+    })
+  }
   get textConfigs(): KonvaTextConfig[] {
     return Object.keys(this.defaultTextConfigMap).map(key => {
       const conf = Object.assign({}, this.defaultTextConfigMap[key], {
@@ -145,6 +185,12 @@ export default class Sheet extends Vue {
       return conf
     })
   }
+  get draggableConfigNames(): (KonvaTextConfig | KonvaImageConfig)[] {
+    return this.textConfigs.concat([
+      this.defaultPortraitImageConfig,
+      this.screenShotConfig
+    ])
+  }
 
   mounted() {
     this.vm = this
@@ -167,7 +213,7 @@ export default class Sheet extends Vue {
     }
 
     const name: string = e.target.name()
-    const config: any = this.textConfigs.find(r => r.draggable && r.name === name)
+    const config: any = this.draggableConfigNames.find(r => r.draggable && r.name === name)
     if (config) {
       this.selectedShapeName = config.name as string
     } else {

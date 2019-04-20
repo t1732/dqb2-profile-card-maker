@@ -17,6 +17,26 @@ export const getters = {
       { value: SheetImageM, text: "じこしょうかい(♂)" }
     ]
   },
+  defaultPortraitImageConfig() {
+    return {
+      name: 'portraitImage',
+      x: 23,
+      y: 132,
+      width: 190,
+      height: 190,
+      draggable: true
+    }
+  },
+  defaultScreenShotConfig() {
+    return {
+      name: 'screenShot',
+      x: 115,
+      y: 625,
+      width: 600,
+      height: 380,
+      draggable: true
+    }
+  },
   defaultTextConfigMap(state, getters, rootState) {
     const conf = {
       nickname: {
@@ -132,7 +152,7 @@ export const getters = {
 export const mutations = {
   setDataUrl: (state, dataUrl) => state.dataUrl = dataUrl
 }
-
+3
 export const actions = {
   onChanged ({ commit }, { dataUrl }) {
     commit('setDataUrl', dataUrl)

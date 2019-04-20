@@ -22,6 +22,8 @@ v-app
     :come-to-look.sync="localComeToLook"
     :multiplay-ps4.sync="localMultiplayPs4"
     :multiplay-switch.sync="localMultiplaySwitch"
+    :portrait-image.sync="localPortraitImage"
+    :screen-shot.sync="localScreenShot"
     @close="close")
   v-toolbar(fixed app clipped-right color="primary")
     v-toolbar-title(v-text="title")
@@ -37,7 +39,7 @@ v-app
 </template>
 
 <script lang="ts">
-  import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({
@@ -65,7 +67,9 @@ import { Component, Vue } from 'vue-property-decorator'
       'wantImpression',
       'comeToLook',
       'multiplayPs4',
-      'multiplaySwitch'
+      'multiplaySwitch',
+      'portraitImage',
+      'screenShot'
     ]),
     ...mapGetters('sheet', [
       'DEFAULT_IMAGE',
@@ -97,7 +101,9 @@ import { Component, Vue } from 'vue-property-decorator'
       'setWantImpression',
       'setComeToLook',
       'setMultiplayPs4',
-      'setMultiplaySwitch'
+      'setMultiplaySwitch',
+      'setPortraitImage',
+      'setScreenShot'
     ]),
     ...mapActions('drawer', ['toggle']),
     ...mapActions('sheet', ['download'])
@@ -219,6 +225,18 @@ export default class Default extends Vue {
   }
   set localMultiplaySwitch(val: boolean) {
     this['setMultiplaySwitch'](val)
+  }
+  get localPortraitImage(): HTMLImageElement {
+    return this['portraitImage']
+  }
+  set localPortraitImage(val: HTMLImageElement) {
+    this['setPortraitImage'](val)
+  }
+  get localScreenShot(): HTMLImageElement {
+    return this['screenShot']
+  }
+  set localScreenShot(val: HTMLImageElement) {
+    this['setScreenShot'](val)
   }
 
   created() {

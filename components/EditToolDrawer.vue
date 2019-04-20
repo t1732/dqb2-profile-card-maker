@@ -12,6 +12,8 @@ v-navigation-drawer.editTool_drawer(v-model="localValue" right app :width="width
     v-flex(xs12)
       font-select(v-model="localFontFamily" :label="fontFamilyLabel" :items="fontFamilyItems" :color.sync="localFontColor")
     v-flex(xs12)
+      image-field(v-model="localPortraitImage" :label="portraitImageLabel")
+    v-flex(xs12)
       text-field(v-model="localNickname" :label="nicknameLabel")
     v-flex(xs12)
       text-field(v-model="localTwitterId" :label="twitterIdLabel")
@@ -36,6 +38,8 @@ v-navigation-drawer.editTool_drawer(v-model="localValue" right app :width="width
     v-flex(xs12)
       text-area(v-model="localBuildStyle" :label="buildStyleLabel")
     v-flex(xs12)
+      image-field(v-model="localScreenShot" :label="screenShotLabel")
+    v-flex(xs12)
       text-area(v-model="localFreeText" :label="freeTextLabel" rows="4")
 </template>
 
@@ -48,7 +52,8 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
     CheckBox: () => import('~/components/CheckBox.vue'),
     FontSelect: () => import('~/components/FontSelect.vue'),
     TextArea: () => import('~/components/TextArea.vue'),
-    TextField: () => import('~/components/TextField.vue')
+    TextField: () => import('~/components/TextField.vue'),
+    ImageField: () => import('~/components/ImageField.vue')
   }
 })
 export default class Credit extends Vue {
@@ -71,6 +76,8 @@ export default class Credit extends Vue {
   comeToLookLabel: string = "島を見に来て！"
   multiplayPs4Label: string = "マルチしよう(Playstation®4)"
   multiplaySwitchLabel: string = "マルチしよう(NintendoSwitch™)"
+  portraitImageLabel: string = "じがぞう/アイコン"
+  screenShotLabel: string = "スクリーンショット"
 
   @Prop({ default: false })
   value!: boolean
@@ -114,6 +121,10 @@ export default class Credit extends Vue {
   multiplayPs4!: boolean
   @Prop({ required: true })
   multiplaySwitch!: boolean
+  @Prop({ required: true })
+  portraitImage!: HTMLImageElement
+  @Prop({ required: true })
+  screenShot!: HTMLImageElement
 
   get localValue (): boolean {
     return this.value
@@ -229,6 +240,19 @@ export default class Credit extends Vue {
   set localMultiplaySwitch(val: boolean) {
     this.$emit('update:multiplaySwitch', val)
   }
+  get localPortraitImage(): HTMLImageElement {
+    return this.portraitImage
+  }
+  set localPortraitImage(val: HTMLImageElement) {
+    this.$emit('update:portraitImage', val)
+  }
+  get localScreenShot(): HTMLImageElement {
+    return this.screenShot
+  }
+  set localScreenShot(val: HTMLImageElement) {
+    this.$emit('update:screenShot', val)
+  }
+
 
   onClose (): void {
     this.$emit('close')

@@ -6,7 +6,8 @@ const ICONS =  {
   'color_select': 'color_lens',
   'edit_tool_open': 'create',
   'edit_tool_close': 'arrow_forward',
-  'download': 'cloud_download'
+  'download': 'cloud_download',
+  'file_input':'cloud_upload'
 }
 
 Vue.use(Vuetify, {
