@@ -154,40 +154,40 @@ export default class Sheet extends Vue {
    *  https://konvajs.org/docs/vue/Transformer.html
    */
   handleStageMouseDown(e) {
-      if (e.target === e.target.getStage()) {
-        this.selectedShapeName = ''
-        this.updateTransformer()
-        return
-      }
-
-      if (e.target.getParent().className === 'Transformer') {
-        return
-      }
-
-      const name: string = e.target.name()
-      const config: KonvaTextConfig | undefined = this.textConfigs.find(r => r.name === name);
-      if (config) {
-        this.selectedShapeName = config.name as string
-      } else {
-        this.selectedShapeName = ''
-      }
+    if (e.target === e.target.getStage()) {
+      this.selectedShapeName = ''
       this.updateTransformer()
+      return
+    }
+
+    if (e.target.getParent().className === 'Transformer') {
+      return
+    }
+
+    const name: string = e.target.name()
+    const config: KonvaTextConfig | undefined = this.textConfigs.find(r => r.name === name);
+    if (config) {
+      this.selectedShapeName = config.name as string
+    } else {
+      this.selectedShapeName = ''
+    }
+    this.updateTransformer()
   }
   /** konva transform 更新 */
   updateTransformer(): void {
-      const transformerNode = this.vm.$refs.transformer.getStage()
-      const stage = transformerNode.getStage()
+    const transformerNode = this.vm.$refs.transformer.getStage()
+    const stage = transformerNode.getStage()
 
-      const selectedNode = stage.findOne('.' + this.selectedShapeName)
-      if (selectedNode === transformerNode.node()) {
-        return
-      }
-      if (selectedNode) {
-        transformerNode.attachTo(selectedNode)
-      } else {
-        transformerNode.detach()
-      }
-      transformerNode.getLayer().batchDraw()
+    const selectedNode = stage.findOne('.' + this.selectedShapeName)
+    if (selectedNode === transformerNode.node()) {
+      return
     }
+    if (selectedNode) {
+      transformerNode.attachTo(selectedNode)
+    } else {
+      transformerNode.detach()
+    }
+    transformerNode.getLayer().batchDraw()
+  }
 }
 </script>
