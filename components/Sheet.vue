@@ -1,11 +1,11 @@
 <template lang="pug">
-v-stage(ref="stage" :config="konvaConfig" @mousedown="handleStageMouseDown")
+v-stage(ref="stage" :config="konvaConfig" @mousedown="handleStageMouseDown" @touchstart="handleStageMouseDown")
   v-layer
     v-image(v-if="isSheetLoaded" :config="cardImageConfig")
     v-image(v-if="portraitImage" :config="portraitImageConfig" @dragend="onChangedPortraitImage")
     v-image(v-if="screenShot" :config="screenShotConfig" @dragend="onChangedScreenShot")
     konva-text(v-for="(conf, i) in textConfigs" :key="`text-${i}`" :config="conf" :scale="scale" @dragend="onChangedText")
-    v-transformer(ref="transformer")
+    v-transformer(ref="transformer" keep-ratio)
 </template>
 
 <script lang="ts">
