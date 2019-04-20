@@ -17,8 +17,8 @@ export const getters = {
       { value: SheetImageM, text: "じこしょうかい(♂)" }
     ]
   },
-  defaultTextConfigMap() {
-    return {
+  defaultTextConfigMap(state, getters, rootState) {
+    const conf = {
       nickname: {
         x: 270,
         y: 145,
@@ -116,6 +116,16 @@ export const getters = {
         draggable: false
       }
     }
+
+    // チェックマークポジションを調整
+    if (rootState['edit-tool'].sheetImage === SheetImageM) {
+      conf['wantImpression'] = Object.assign(conf['wantImpression'], { x: 410 })
+      conf['comeToLook'] = Object.assign(conf['comeToLook'], { x: 537 })
+      conf['multiplayPs4'] = Object.assign(conf['multiplayPs4'], { x: 325 })
+      conf['multiplaySwitch'] = Object.assign(conf['multiplaySwitch'], { x: 480 })
+    }
+
+    return conf
   }
 }
 
