@@ -32,9 +32,9 @@ export default class Sheet extends Vue {
   @Prop({ required: true })
   readonly defaultTextConfigMap!: {[s: string]: KonvaTextConfig }
   @Prop({ required: true })
-  readonly defaultPortraitImageConfig!: KonvaTextConfig
+  readonly defaultPortraitImageConfig!: KonvaImageConfig
   @Prop({ required: true })
-  readonly defaultScreenShotConfig!: KonvaTextConfig
+  readonly defaultScreenShotConfig!: KonvaImageConfig
   @Prop({ required: true })
   readonly sheetImage!: string
   @Prop({ required: true })
@@ -91,6 +91,9 @@ export default class Sheet extends Vue {
   }
   @Watch('portraitImage')
   onChangedPortraitImage(val: HTMLImageElement): void {
+    if (!this.portraitImageConfig) {
+      return
+    }
     const stage = this.vm.$refs.stage.getNode()
     this.cardImageObj = this.cardImageObj
     this.portraitImageConfig.image = val
@@ -101,6 +104,9 @@ export default class Sheet extends Vue {
   }
   @Watch('screenShot')
   onChangedScreenShot(val: HTMLImageElement): void {
+    if (!this.screenShotConfig) {
+      return
+    }
     const stage = this.vm.$refs.stage.getNode()
     this.cardImageObj = this.cardImageObj
     this.screenShotConfig.image = val
@@ -145,7 +151,8 @@ export default class Sheet extends Vue {
     return {
       image: this.cardImageObj,
       width: this.konvaConfig.width,
-      height: this.konvaConfig.height
+      height: this.konvaConfig.height,
+      draggable: false
     }
   }
   get portraitImageConfig(): KonvaImageConfig {
@@ -185,11 +192,11 @@ export default class Sheet extends Vue {
       return conf
     })
   }
-  get draggableConfigNames(): (KonvaTextConfig | KonvaImageConfig)[] {
-    return this.textConfigs.concat([
-      this.defaultPortraitImageConfig,
+  get imageConfigs(): KonvaImageConfig[] {
+    return [
+      this.portraitImageConfig,
       this.screenShotConfig
-    ])
+    ]
   }
 
   mounted() {
@@ -213,7 +220,11 @@ export default class Sheet extends Vue {
     }
 
     const name: string = e.target.name()
-    const config: any = this.draggableConfigNames.find(r => r.draggable && r.name === name)
+    let config: KonvaTextConfig | KonvaImageConfig | undefined =
+      this.textConfigs.find(x => x.draggable && x.name === name)
+    if (!config) {
+      config = this.imageConfigs.find(x => x.draggable && x.name === name)
+    }
     if (config) {
       this.selectedShapeName = config.name as string
     } else {

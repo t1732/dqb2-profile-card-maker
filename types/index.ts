@@ -9,8 +9,8 @@ export interface KonvaImageConfig {
   height: number
   x?: number
   y?: number
-  image: HTMLImageElement | undefined | null
-  draggable?: boolean
+  image?: HTMLImageElement
+  draggable: boolean
 }
 
 export interface KonvaTextConfig {
