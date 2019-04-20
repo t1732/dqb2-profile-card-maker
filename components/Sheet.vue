@@ -165,7 +165,8 @@ export default class Sheet extends Vue {
     }
 
     const name: string = e.target.name()
-    const config: KonvaTextConfig | undefined = this.textConfigs.find(r => r.name === name);
+    const config: KonvaTextConfig | undefined =
+      this.textConfigs.find(r => r.draggable && r.name === name)
     if (config) {
       this.selectedShapeName = config.name as string
     } else {
