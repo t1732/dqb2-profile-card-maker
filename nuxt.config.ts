@@ -16,7 +16,14 @@ const config: NuxtConfiguration = {
         hid: 'description',
         name: 'description',
         content: "ドラゴンクエストビルダーズ2の公式配布ビルダーじこしょうかいカードの作成を支援するツールです"
-      }
+      },
+      { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:site", content: "@euphton" },
+      { name: "twitter:creator", content: "@euphton" },
+      { property: "og:url", content: "https://dqb2-profile-card-maker.firebaseapp.com" },
+      { property: "og:title", content: "ドラゴンクエストビルダーズ2 じこしょうかいカード作成メーカー" },
+      { property: "og:description", content: "どんどんじこしょうかいしよう！" },
+      { property: "og:image", content: "https://dqb2-profile-card-maker.firebaseapp.com/image/thumb.png" },
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
