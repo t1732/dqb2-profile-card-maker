@@ -1,6 +1,6 @@
 <template lang="pug">
 v-layout(column justify-center align-center)
-  v-flex(xs12 sm8 md6)
+  v-flex.sheetCanvas(xs12 sm8 md6)
     sheet(
       :sheet-image="sheetImage"
       :scale="scale"
@@ -86,10 +86,11 @@ export default class Index extends Vue {
   imageMargin: number = 30
 
   get scale(): number {
-    if (this.profileCardImageSize.width <= width)
-      return 1.0
-    else
-      return (width - (this.imageMargin * 2)) / this.profileCardImageSize.width
+    // if (this.profileCardImageSize.width <= width)
+    //   return 1.0
+    // else
+    //   return (width - (this.imageMargin * 2)) / this.profileCardImageSize.width
+    return 1.0
   }
 
   mounted () {
@@ -97,3 +98,8 @@ export default class Index extends Vue {
   }
 }
 </script>
+
+<style lang="stylus" scoped>
+.sheetCanvas
+  overflow hidden
+</style>

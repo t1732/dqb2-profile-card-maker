@@ -1,6 +1,7 @@
 export interface KonvaConfig {
   width: number
   height: number
+  draggable: boolean
 }
 
 export interface KonvaImageConfig {

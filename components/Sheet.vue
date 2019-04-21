@@ -144,7 +144,8 @@ export default class Sheet extends Vue {
   get konvaConfig(): KonvaConfig {
     return {
       width: this.cardWidth * this.scale,
-      height: this.cardHeight * this.scale
+      height: this.cardHeight * this.scale,
+      draggable: true
     }
   }
   get cardImageConfig(): KonvaImageConfig {
