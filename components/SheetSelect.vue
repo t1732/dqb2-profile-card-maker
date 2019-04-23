@@ -4,13 +4,8 @@ v-select(v-model="localValue" :items="items" :label="label" outline)
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { Chrome } from 'vue-color'
 
-@Component({
-  components: {
-    ChromeColorPicker: Chrome
-  }
-})
+@Component
 export default class CardTypeSelect extends Vue {
   @Prop({ required: true })
   value!: string
