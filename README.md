@@ -1,6 +1,8 @@
-# builder_profile
+# dqb2-profile-card-maker
 
-> Dragonquest builders 2 profile card
+> Dragonquest builders 2 profile card edit tool
+
+https://dqb2-profile-card-maker.firebaseapp.com/
 
 ## Build Setup
 
