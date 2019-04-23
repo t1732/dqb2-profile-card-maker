@@ -110,7 +110,7 @@ import { Component, Vue } from 'vue-property-decorator'
   }
 })
 export default class Default extends Vue {
-  title: string = 'DQB2自己紹介カード作成ツール'
+  title: string = 'DQB2じこしょうかいシート作成ツール'
 
   get drawerOpen (): boolean {
     return this['open']
