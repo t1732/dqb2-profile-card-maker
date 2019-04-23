@@ -87,4 +87,4 @@ sw.*
 .firebase/*
 
 # ignore image
-assets/image/*
+assets/image/*.jpg

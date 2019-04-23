@@ -10,6 +10,10 @@ https://dqb2-profile-card-maker.firebaseapp.com/
 # install dependencies
 $ yarn install
 
+# http://www.dragonquest.jp/builders2/funkit/
+# base card image download
+$ cp [download file] assets/image
+
 # serve with hot reload at localhost:3000
 $ yarn run dev
 
