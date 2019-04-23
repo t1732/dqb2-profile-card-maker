@@ -1,6 +1,6 @@
 # dqb2-profile-card-maker
 
-> Dragonquest builders 2 profile card edit tool
+> ドラゴンクエストビルダーズ2 じこしょうかいカード作成ツール
 
 https://dqb2-profile-card-maker.firebaseapp.com/
 
