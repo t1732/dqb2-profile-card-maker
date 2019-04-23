@@ -17,7 +17,6 @@ import { mapMutations } from 'vuex';
 })
 export default class Footer extends Vue {
   credits: string[] = [
-    '&copy; 2019 @euphton',
     '&copy; 2018 ARMOR PROJECT/BIRD STUDIO/SQUARE ENIX All Rights Reserved.'
   ]
 
