@@ -101,5 +101,5 @@ export default class Index extends Vue {
 
 <style lang="stylus" scoped>
 .sheetCanvas
-  overflow hidden
+  overflow: auto
 </style>
