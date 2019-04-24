@@ -81,10 +81,10 @@ export default class Sheet extends Vue {
     const stage = this.vm.$refs.stage.getNode()
     this.cardImageObj.src = val
     this.cardImageObj.onload = () => {
+      this.isSheetLoaded = true
       this.cardImageObj = this.cardImageObj
       this.$nextTick(() => {
         stage.draw()
-        this.isSheetLoaded = true
         this.$emit('changed', { dataUrl: stage.toDataURL() })
       })
     }
