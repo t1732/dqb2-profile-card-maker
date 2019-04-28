@@ -152,7 +152,7 @@ export const getters = {
 export const mutations = {
   setDataUrl: (state, dataUrl) => state.dataUrl = dataUrl
 }
-3
+
 export const actions = {
   onChanged ({ commit }, { dataUrl }) {
     commit('setDataUrl', dataUrl)
