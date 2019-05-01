@@ -4,7 +4,7 @@ v-stage(ref="stage" :config="konvaConfig" @mousedown="handleStageMouseDown" @tou
     v-image(v-if="isSheetLoaded" :config="cardImageConfig")
     v-image(v-if="portraitImage" :config="portraitImageConfig" @dragend="onChangedPortraitImage")
     v-image(v-if="screenShot" :config="screenShotConfig" @dragend="onChangedScreenShot")
-    konva-text(v-for="(conf, i) in textConfigs" :key="`text-${i}`" :config="conf" :scale="scale" @dragend="onChangedText")
+    konva-text(v-for="(conf, i) in textConfigs" :key="`text-${i}`" :config="conf" @dragend="onChangedText")
     v-transformer(ref="transformer" keep-ratio)
 </template>
 
@@ -83,10 +83,7 @@ export default class Sheet extends Vue {
     this.cardImageObj.onload = () => {
       this.isSheetLoaded = true
       this.cardImageObj = this.cardImageObj
-      this.$nextTick(() => {
-        stage.draw()
-        this.$emit('changed', { dataUrl: stage.toDataURL() })
-      })
+      this.stageRedraw(stage)
     }
   }
   @Watch('portraitImage')
@@ -97,10 +94,7 @@ export default class Sheet extends Vue {
     const stage = this.vm.$refs.stage.getNode()
     this.cardImageObj = this.cardImageObj
     this.portraitImageConfig.image = val
-    this.$nextTick(() => {
-      stage.draw()
-      this.$emit('changed', { dataUrl: stage.toDataURL() })
-    })
+    this.stageRedraw(stage)
   }
   @Watch('screenShot')
   onChangedScreenShot(val: HTMLImageElement): void {
@@ -110,10 +104,7 @@ export default class Sheet extends Vue {
     const stage = this.vm.$refs.stage.getNode()
     this.cardImageObj = this.cardImageObj
     this.screenShotConfig.image = val
-    this.$nextTick(() => {
-      stage.draw()
-      this.$emit('changed', { dataUrl: stage.toDataURL() })
-    })
+    this.stageRedraw(stage)
   }
   @Watch('fontFamily')
   @Watch('fontColor')
@@ -135,17 +126,14 @@ export default class Sheet extends Vue {
   onChangedText(val: string): void {
     const stage = this.vm.$refs.stage.getNode()
     this.cardImageObj = this.cardImageObj
-    this.$nextTick(() => {
-      stage.draw()
-      this.$emit('changed', { dataUrl: stage.toDataURL() })
-    })
+    this.stageRedraw(stage)
   }
 
   get konvaConfig(): KonvaConfig {
     return {
-      width: this.cardWidth * this.scale,
-      height: this.cardHeight * this.scale,
-      draggable: false
+      width: this.cardWidth,
+      height: this.cardHeight,
+      draggable: this.scale < 1
     }
   }
   get cardImageConfig(): KonvaImageConfig {
@@ -203,6 +191,17 @@ export default class Sheet extends Vue {
   mounted() {
     this.vm = this
     if (this.sheetImage) this.onCardImageChanged(this.sheetImage)
+  }
+
+  stageRedraw(stage: any) {
+    this.$nextTick(() => {
+      const position: {[s: string]: number} = stage.position()
+      stage.position({x: 0, y: 0})
+      stage.draw()
+      this.$emit('changed', { dataUrl: stage.toDataURL() })
+      stage.position({x: position.x, y: position.y})
+      stage.draw()
+    })
   }
 
   /**

@@ -86,11 +86,10 @@ export default class Index extends Vue {
   imageMargin: number = 30
 
   get scale(): number {
-    // if (this.profileCardImageSize.width <= width)
-    //   return 1.0
-    // else
-    //   return (width - (this.imageMargin * 2)) / this.profileCardImageSize.width
-    return 1.0
+    if (this.profileCardImageSize.width <= width)
+      return 1.0
+    else
+      return (width - (this.imageMargin * 2)) / this.profileCardImageSize.width
   }
 
   mounted () {
