@@ -28,5 +28,6 @@ export default class Footer extends Vue {
 
 <style lang="stylus" scoped>
 .footer
+  padding-top: 20px
   font-size 0.9em
 </style>
