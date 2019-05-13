@@ -24,7 +24,9 @@ v-app
     :multiplay-switch.sync="localMultiplaySwitch"
     :portrait-image.sync="localPortraitImage"
     :screen-shot.sync="localScreenShot"
-    @close="close")
+    :paint-mode="paintMode"
+    @close="close"
+    @clicked-paint-mode="onClickedPaintMode")
   v-toolbar(fixed app clipped-right color="primary")
     v-toolbar-title(v-text="title")
     v-spacer
@@ -71,6 +73,9 @@ import { Component, Vue } from 'vue-property-decorator'
       'portraitImage',
       'screenShot'
     ]),
+    ...mapState('paint-mode', {
+      paintMode: 'enable'
+    }),
     ...mapGetters('sheet', [
       'DEFAULT_IMAGE',
       'imageItems'
@@ -106,7 +111,10 @@ import { Component, Vue } from 'vue-property-decorator'
       'setScreenShot'
     ]),
     ...mapActions('drawer', ['toggle']),
-    ...mapActions('sheet', ['download'])
+    ...mapActions('sheet', ['download']),
+    ...mapActions('paint-mode', {
+        togglePaintMode: 'toggle'
+      })
   }
 })
 export default class Default extends Vue {
@@ -247,6 +255,10 @@ export default class Default extends Vue {
 
   close (): void {
     this.drawerOpen = false
+  }
+
+  onClickedPaintMode(): void {
+    this['togglePaintMode']()
   }
 }
 </script>

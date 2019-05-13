@@ -77,6 +77,8 @@ export default class Sheet extends Vue {
   readonly portraitImage?: HTMLImageElement
   @Prop({ required: true })
   readonly screenShot?: HTMLImageElement
+  @Prop()
+  readonly paintMode: boolean = false
 
   @Watch('sheetImage')
   onCardImageChanged(val: string): void {
@@ -135,7 +137,7 @@ export default class Sheet extends Vue {
     return {
       width: this.cardWidth,
       height: this.cardHeight,
-      draggable: this.isStageDraggable
+      draggable: this.isStageDraggable && !this.paintMode
     }
   }
   get cardImageConfig(): KonvaImageConfig {
@@ -213,6 +215,10 @@ export default class Sheet extends Vue {
    *  https://konvajs.org/docs/vue/Transformer.html
    */
   handleStageMouseDown(e) {
+    if (this.paintMode) {
+      return
+    }
+
     if (e.target === e.target.getStage()) {
       this.selectedShapeName = ''
       this.updateTransformer()
@@ -289,7 +295,7 @@ export default class Sheet extends Vue {
     })
 
     image.addEventListener('mousemove touchmove', () => {
-      if (!isPaint || this.isStageDraggable) {
+      if (!isPaint || !this.paintMode || this.isStageDraggable) {
         return
       }
 

@@ -7,7 +7,8 @@ const ICONS =  {
   'edit_tool_open': 'create',
   'edit_tool_close': 'arrow_forward',
   'download': 'cloud_download',
-  'file_input':'cloud_upload'
+  'file_input':'cloud_upload',
+  'paint_mode': 'brush'
 }
 
 Vue.use(Vuetify, {

@@ -28,6 +28,7 @@ v-layout(column justify-center align-center)
       :multiplay-switch="multiplaySwitch"
       :portrait-image="portraitImage"
       :screen-shot="screenShot"
+      :paint-mode="paintMode"
       @changed="onChangedSheet")
 </template>
 
@@ -64,6 +65,9 @@ const height: number = window.innerHeight
       'portraitImage',
       'screenShot'
     ]),
+    ...mapState('paint-mode', {
+      paintMode: 'enable'
+    }),
     ...mapGetters('edit-tool', ['twitterId']),
     ...mapGetters('sheet', [
       'defaultTextConfigMap',
