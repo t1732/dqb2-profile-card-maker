@@ -10,8 +10,6 @@ v-navigation-drawer.editTool_drawer(v-model="localValue" right app :width="width
     v-flex(xs12)
       sheet-select(v-model="localSheetImage" :label="sheetImageLabel" :items="sheetImageItems" outline)
     v-flex(xs12)
-      paint-button.mb-4(:disabled="paintMode" @click="onClickedPaintMode")
-    v-flex(xs12)
       font-select(v-model="localFontFamily" :label="fontFamilyLabel" :items="fontFamilyItems" :color.sync="localFontColor")
     v-flex(xs12)
       image-field(v-model="localPortraitImage" :label="portraitImageLabel")
@@ -55,8 +53,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
     FontSelect: () => import('~/components/FontSelect.vue'),
     TextArea: () => import('~/components/TextArea.vue'),
     TextField: () => import('~/components/TextField.vue'),
-    ImageField: () => import('~/components/ImageField.vue'),
-    PaintButton: () => import('~/components/PaintButton.vue')
+    ImageField: () => import('~/components/ImageField.vue')
   }
 })
 export default class Credit extends Vue {
@@ -128,8 +125,6 @@ export default class Credit extends Vue {
   portraitImage!: HTMLImageElement
   @Prop({ required: true })
   screenShot!: HTMLImageElement
-  @Prop({ required: true })
-  paintMode!: boolean
 
   get localValue (): boolean {
     return this.value
@@ -260,10 +255,6 @@ export default class Credit extends Vue {
 
   onClose (): void {
     this.$emit('close')
-  }
-
-  onClickedPaintMode(): void {
-    this.$emit('clicked-paint-mode')
   }
 }
 </script>

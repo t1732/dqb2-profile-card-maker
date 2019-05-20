@@ -24,9 +24,7 @@ v-app
     :multiplay-switch.sync="localMultiplaySwitch"
     :portrait-image.sync="localPortraitImage"
     :screen-shot.sync="localScreenShot"
-    :paint-mode="paintMode"
-    @close="close"
-    @clicked-paint-mode="onClickedPaintMode")
+    @close="close")
   v-toolbar(fixed app clipped-right color="primary")
     v-toolbar-title(v-text="title")
     v-spacer
@@ -37,7 +35,7 @@ v-app
       lisence
     v-container
       nuxt
-  app-footer(@download="download")
+  app-footer(:paint-mode="paintMode" @click-paint-mode="onClickedPaintMode" @download="download")
   paint-tool-dialog(
     :value="paintMode"
     :type="paintType"
