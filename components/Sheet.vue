@@ -321,14 +321,15 @@ export default class Sheet extends Vue {
       context.beginPath()
 
       var localPos = {
-        x: lastPointerPosition.x - image.x(),
-        y: lastPointerPosition.y - image.y()
+        x: lastPointerPosition.x - image.x() - stage.position().x,
+        y: lastPointerPosition.y - image.y() - stage.position().y
       }
       context.moveTo(localPos.x, localPos.y)
+
       var pos = stage.getPointerPosition()
       localPos = {
-        x: pos.x - image.x(),
-        y: pos.y - image.y()
+        x: pos.x - image.x() - stage.position().x,
+        y: pos.y - image.y() - stage.position().y
       }
       context.lineTo(localPos.x, localPos.y)
       context.closePath()
