@@ -253,7 +253,6 @@ export default class Credit extends Vue {
     this.$emit('update:screenShot', val)
   }
 
-
   onClose (): void {
     this.$emit('close')
   }

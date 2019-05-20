@@ -1,6 +1,6 @@
 <template lang="pug">
 v-stage(ref="stage" :config="konvaConfig" @mousedown="handleStageMouseDown" @touchstart="handleStageMouseDown")
-  v-layer
+  v-layer(ref="layer")
     v-image(v-if="isSheetLoaded" :config="cardImageConfig")
     v-image(v-if="portraitImage" :config="portraitImageConfig" @dragend="onChangedPortraitImage")
     v-image(v-if="screenShot" :config="screenShotConfig" @dragend="onChangedScreenShot")
@@ -11,6 +11,7 @@ v-stage(ref="stage" :config="konvaConfig" @mousedown="handleStageMouseDown" @tou
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 import { KonvaConfig, KonvaImageConfig, KonvaTextConfig } from '~/types'
+import Konva from 'konva/lib/Core'
 
 @Component({
   components: {
@@ -22,6 +23,8 @@ export default class Sheet extends Vue {
   cardImageObj: HTMLImageElement = new Image()
   isSheetLoaded: boolean = false
   selectedShapeName: string = ''
+  isStageDraggable: boolean = false
+  paint2DCanvas!: HTMLCanvasElement
 
   @Prop({ default: 800 })
   readonly cardWidth!: number
@@ -75,6 +78,16 @@ export default class Sheet extends Vue {
   readonly portraitImage?: HTMLImageElement
   @Prop({ required: true })
   readonly screenShot?: HTMLImageElement
+  @Prop({ required: true, default: false })
+  readonly paintMode!: boolean
+  @Prop({ required: true })
+  readonly paintColor!: string
+  @Prop({ required: true })
+  readonly paintType!: string
+  @Prop({ required: true })
+  readonly paintLineJoin!: string
+  @Prop({ required: true })
+  readonly paintLineWidth!: number
 
   @Watch('sheetImage')
   onCardImageChanged(val: string): void {
@@ -129,11 +142,21 @@ export default class Sheet extends Vue {
     this.stageRedraw(stage)
   }
 
+  @Watch("paintColor")
+  @Watch("paintLineJoin")
+  @Watch("paintLineWidth")
+  onChangedPaintColor(): void {
+    const context: any = this.paint2DCanvas.getContext('2d')
+    context.strokeStyle = this.paintColor
+    context.lineJoin = this.paintLineJoin
+    context.lineWidth = this.paintLineWidth
+  }
+
   get konvaConfig(): KonvaConfig {
     return {
       width: this.cardWidth,
       height: this.cardHeight,
-      draggable: this.scale < 1
+      draggable: this.isStageDraggable && !this.paintMode
     }
   }
   get cardImageConfig(): KonvaImageConfig {
@@ -191,6 +214,8 @@ export default class Sheet extends Vue {
   mounted() {
     this.vm = this
     if (this.sheetImage) this.onCardImageChanged(this.sheetImage)
+    this.isStageDraggable = this.scale < 1
+    this.initPaint()
   }
 
   stageRedraw(stage: any) {
@@ -209,6 +234,10 @@ export default class Sheet extends Vue {
    *  https://konvajs.org/docs/vue/Transformer.html
    */
   handleStageMouseDown(e) {
+    if (this.paintMode) {
+      return
+    }
+
     if (e.target === e.target.getStage()) {
       this.selectedShapeName = ''
       this.updateTransformer()
@@ -247,6 +276,68 @@ export default class Sheet extends Vue {
       transformerNode.detach()
     }
     transformerNode.getLayer().batchDraw()
+  }
+
+  initPaint() {
+    let isPaint: boolean = false
+    let lastPointerPosition: {[s: string]: number}
+
+    const stage = this.vm.$refs.stage.getNode()
+    const layer = this.vm.$refs.layer.getNode()
+    this.paint2DCanvas = document.createElement('canvas')
+    this.paint2DCanvas.width = stage.width()
+    this.paint2DCanvas.height = stage.height()
+    const image = new Konva.Image({
+      image: this.paint2DCanvas,
+      x: 0,
+      y: 0,
+      width: this.cardWidth,
+      height: this.cardHeight
+    })
+    layer.add(image)
+    this.stageRedraw(stage)
+
+    const context: any = this.paint2DCanvas.getContext('2d')
+    context.strokeStyle = this.paintColor
+    context.lineJoin = this.paintLineJoin
+    context.lineWidth = this.paintLineWidth
+
+    image.on('mousedown touchstart', () => {
+      isPaint = true
+      lastPointerPosition = stage.getPointerPosition()
+    })
+
+    image.addEventListener('mouseup touchend', () => {
+      isPaint = false
+      this.stageRedraw(stage)
+    })
+
+    image.addEventListener('mousemove touchmove', () => {
+      if (!this.paintMode || !isPaint) {
+        return
+      }
+
+      context.globalCompositeOperation = this.paintType
+      context.beginPath()
+
+      var localPos = {
+        x: lastPointerPosition.x - image.x() - stage.position().x,
+        y: lastPointerPosition.y - image.y() - stage.position().y
+      }
+      context.moveTo(localPos.x, localPos.y)
+
+      var pos = stage.getPointerPosition()
+      localPos = {
+        x: pos.x - image.x() - stage.position().x,
+        y: pos.y - image.y() - stage.position().y
+      }
+      context.lineTo(localPos.x, localPos.y)
+      context.closePath()
+      context.stroke()
+
+      lastPointerPosition = pos
+      layer.batchDraw()
+    })
   }
 }
 </script>

@@ -35,7 +35,15 @@ v-app
       lisence
     v-container
       nuxt
-  app-footer(@download="download")
+  app-footer(:paint-mode="paintMode" @click-paint-mode="onClickedPaintMode" @download="download")
+  paint-tool-dialog(
+    :value="paintMode"
+    :type="paintType"
+    :color.sync="localPaintColor"
+    :line-width.sync="localPaintLineWidth"
+    @paint="togglePaintType"
+    @eraser="togglePaintType"
+    @close="togglePaintMode")
 </template>
 
 <script lang="ts">
@@ -46,7 +54,8 @@ import { Component, Vue } from 'vue-property-decorator'
   components: {
     EditToolDrawer: () => import('~/components/EditToolDrawer.vue'),
     AppFooter: () => import('~/components/Footer.vue'),
-    Lisence: () => import('~/components/Lisence.vue')
+    Lisence: () => import('~/components/Lisence.vue'),
+    PaintToolDialog: () => import('~/components/PaintToolDialog.vue')
   },
   computed: {
     ...mapState('drawer', ['open']),
@@ -71,6 +80,13 @@ import { Component, Vue } from 'vue-property-decorator'
       'portraitImage',
       'screenShot'
     ]),
+    ...mapState('paint-mode', {
+      paintMode: 'enable',
+      paintColor: 'color',
+      paintType: 'type',
+      paintLineJoin: 'lineJoin',
+      paintLlineWidth: 'paintLineWidth'
+    }),
     ...mapGetters('sheet', [
       'DEFAULT_IMAGE',
       'imageItems'
@@ -105,8 +121,16 @@ import { Component, Vue } from 'vue-property-decorator'
       'setPortraitImage',
       'setScreenShot'
     ]),
+    ...mapMutations("paint-mode", {
+      setPaintColor: "setColor",
+      setPaintLineWidth: "setLineWidth"
+    }),
     ...mapActions('drawer', ['toggle']),
-    ...mapActions('sheet', ['download'])
+    ...mapActions('sheet', ['download']),
+    ...mapActions('paint-mode', {
+        togglePaintMode: 'toggle',
+        togglePaintType: 'toggleType'
+      })
   }
 })
 export default class Default extends Vue {
@@ -238,6 +262,18 @@ export default class Default extends Vue {
   set localScreenShot(val: HTMLImageElement) {
     this['setScreenShot'](val)
   }
+  get localPaintColor(): string {
+    return this["paintColor"]
+  }
+  set localPaintColor(val: string) {
+    this["setPaintColor"](val)
+  }
+  get localPaintLineWidth(): number {
+    return this["paintLineWidth"]
+  }
+  set localPaintLineWidth(val: number) {
+    this["setPaintLineWidth"](val)
+  }
 
   created() {
     this.localSheetImage = this['DEFAULT_IMAGE']
@@ -247,6 +283,10 @@ export default class Default extends Vue {
 
   close (): void {
     this.drawerOpen = false
+  }
+
+  onClickedPaintMode(): void {
+    this['togglePaintMode']()
   }
 }
 </script>

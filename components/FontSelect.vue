@@ -1,10 +1,6 @@
 <template lang="pug">
 v-select(v-model="localValue" :items="items" :label="label" outline)
-  v-menu(offset-y :close-on-content-click="false" slot="append-outer")
-      template(v-slot:activator="{ on }")
-        v-btn(icon v-on="on")
-          v-icon(v-text="$vuetify.icons.color_select" :color="localColor")
-      chrome-color-picker(v-model="colors")
+  color-picker-button(slot="append-outer" :title="colorPickerTitle" v-model="localColor")
 </template>
 
 <script lang="ts">
@@ -13,11 +9,13 @@ import { Chrome } from 'vue-color'
 
 @Component({
   components: {
-    ChromeColorPicker: Chrome
+    ChromeColorPicker: Chrome,
+    ColorPickerButton: () => import("~/components/ColorPickerButton.vue")
   }
 })
 export default class FontSelect extends Vue {
   colors?: {[s: string]: string | number} = {}
+  colorPickerTitle: string = "Font color picker"
 
   @Prop({ required: true })
   value!: string
