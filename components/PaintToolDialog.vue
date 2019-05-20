@@ -11,7 +11,7 @@ v-dialog(
         v-icon(v-text="$vuetify.icons.paint_mode")
       v-btn(icon :disabled="type  === 'destination-out'" @click="onEraser")
         v-icon(v-text="$vuetify.icons.eraser")
-      color-picker-button(v-model="localColor")
+      color-picker-button(:title="colorPickerTitle" v-model="localColor")
       v-spacer
       v-btn(icon @click="onClose")
         v-icon(v-text="$vuetify.icons.close")
@@ -29,6 +29,8 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
   }
 })
 export default class PaintToolDialog extends Vue {
+  colorPickerTitle: string = "Brush color picker"
+
   @Prop({ default: false })
   readonly value!: boolean
   @Prop({ required: true })
