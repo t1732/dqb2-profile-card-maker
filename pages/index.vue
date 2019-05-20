@@ -29,6 +29,10 @@ v-layout(column justify-center align-center)
       :portrait-image="portraitImage"
       :screen-shot="screenShot"
       :paint-mode="paintMode"
+      :paint-color="paintColor"
+      :paint-type="paintType"
+      :paint-line-join="paintLineJoin"
+      :paint-line-width="paintLineWidth"
       @changed="onChangedSheet")
 </template>
 
@@ -66,7 +70,11 @@ const height: number = window.innerHeight
       'screenShot'
     ]),
     ...mapState('paint-mode', {
-      paintMode: 'enable'
+      paintMode: 'enable',
+      paintColor: 'color',
+      paintType: 'type',
+      paintLineJoin: 'lineJoin',
+      paintLineWidth: 'lineWidth'
     }),
     ...mapGetters('edit-tool', ['twitterId']),
     ...mapGetters('sheet', [

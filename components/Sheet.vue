@@ -24,6 +24,7 @@ export default class Sheet extends Vue {
   isSheetLoaded: boolean = false
   selectedShapeName: string = ''
   isStageDraggable: boolean = false
+  paint2DCanvas!: HTMLCanvasElement
 
   @Prop({ default: 800 })
   readonly cardWidth!: number
@@ -77,8 +78,16 @@ export default class Sheet extends Vue {
   readonly portraitImage?: HTMLImageElement
   @Prop({ required: true })
   readonly screenShot?: HTMLImageElement
-  @Prop()
-  readonly paintMode: boolean = false
+  @Prop({ required: true, default: false })
+  readonly paintMode!: boolean
+  @Prop({ required: true })
+  readonly paintColor!: string
+  @Prop({ required: true })
+  readonly paintType!: string
+  @Prop({ required: true })
+  readonly paintLineJoin!: string
+  @Prop({ required: true })
+  readonly paintLineWidth!: number
 
   @Watch('sheetImage')
   onCardImageChanged(val: string): void {
@@ -131,6 +140,16 @@ export default class Sheet extends Vue {
     const stage = this.vm.$refs.stage.getNode()
     this.cardImageObj = this.cardImageObj
     this.stageRedraw(stage)
+  }
+
+  @Watch("paintColor")
+  @Watch("paintLineJoin")
+  @Watch("paintLineWidth")
+  onChangedPaintColor(): void {
+    const context: any = this.paint2DCanvas.getContext('2d')
+    context.strokeStyle = this.paintColor
+    context.lineJoin = this.paintLineJoin
+    context.lineWidth = this.paintLineWidth
   }
 
   get konvaConfig(): KonvaConfig {
@@ -262,15 +281,14 @@ export default class Sheet extends Vue {
   initPaint() {
     let isPaint: boolean = false
     let lastPointerPosition: {[s: string]: number}
-    let mode: string = 'brush'
 
     const stage = this.vm.$refs.stage.getNode()
     const layer = this.vm.$refs.layer.getNode()
-    const canvas: HTMLCanvasElement = document.createElement('canvas')
-    canvas.width = stage.width()
-    canvas.height = stage.height()
+    this.paint2DCanvas = document.createElement('canvas')
+    this.paint2DCanvas.width = stage.width()
+    this.paint2DCanvas.height = stage.height()
     const image = new Konva.Image({
-      image: canvas,
+      image: this.paint2DCanvas,
       x: 0,
       y: 0,
       width: this.cardWidth,
@@ -279,10 +297,10 @@ export default class Sheet extends Vue {
     layer.add(image)
     this.stageRedraw(stage)
 
-    const context: any = canvas.getContext('2d')
-    context.strokeStyle = '#df4b26'
-    context.lineJoin = 'round'
-    context.lineWidth = 5
+    const context: any = this.paint2DCanvas.getContext('2d')
+    context.strokeStyle = this.paintColor
+    context.lineJoin = this.paintLineJoin
+    context.lineWidth = this.paintLineWidth
 
     image.on('mousedown touchstart', () => {
       isPaint = true
@@ -295,16 +313,11 @@ export default class Sheet extends Vue {
     })
 
     image.addEventListener('mousemove touchmove', () => {
-      if (!isPaint || !this.paintMode || this.isStageDraggable) {
+      if (!this.paintMode || !isPaint) {
         return
       }
 
-      if (mode === 'brush') {
-        context.globalCompositeOperation = 'source-over'
-      }
-      if (mode === 'eraser') {
-        context.globalCompositeOperation = 'destination-out'
-      }
+      context.globalCompositeOperation = this.paintType
       context.beginPath()
 
       var localPos = {
