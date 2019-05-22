@@ -1,22 +1,16 @@
 <template lang="pug">
-v-dialog(
-  :value="value"
-  hide-overlay
-  persistent
-  width="200"
-  content-class="paintPanel")
-  v-card(color="accent" dark)
-    v-card-actions
-      v-btn(icon :disabled="type === 'source-over'" @click="onPaint")
-        v-icon(v-text="$vuetify.icons.paint_mode")
-      v-btn(icon :disabled="type  === 'destination-out'" @click="onEraser")
-        v-icon(v-text="$vuetify.icons.eraser")
-      color-picker-button(:title="colorPickerTitle" v-model="localColor")
-      v-spacer
-      v-btn(icon @click="onClose")
-        v-icon(v-text="$vuetify.icons.close")
-    span.white--text {{ localLineWidth }}
-    line-width-slider.mt-0.mx-2.pb-2(v-model="localLineWidth")
+v-card.paintPanel(v-if="value" color="accent" width="200" dark)
+  v-card-actions
+    v-btn(icon :disabled="type === 'source-over'" @click="onPaint")
+      v-icon(v-text="$vuetify.icons.paint_mode")
+    v-btn(icon :disabled="type  === 'destination-out'" @click="onEraser")
+      v-icon(v-text="$vuetify.icons.eraser")
+    color-picker-button(:title="colorPickerTitle" v-model="localColor")
+    v-spacer
+    v-btn(icon @click="onClose")
+      v-icon(v-text="$vuetify.icons.close")
+  span.white--text {{ localLineWidth }}
+  line-width-slider.mt-0.mx-2.pb-2(v-model="localLineWidth")
 </template>
 
 <script lang="ts">
@@ -72,8 +66,9 @@ export default class PaintToolDialog extends Vue {
 </script>
 
 <style lang="stylus" scoped>
->>> .paintPanel
-  position absolute
-  left 0
-  bottom 40px
+.paintPanel
+  position fixed
+  left 10px
+  bottom 80px
+  z-index 200
 </style>

@@ -36,7 +36,7 @@ v-app
     v-container
       nuxt
   app-footer(:paint-mode="paintMode" @click-paint-mode="onClickedPaintMode" @download="download")
-  paint-tool-dialog(
+  paint-tool-panel(
     :value="paintMode"
     :type="paintType"
     :color.sync="localPaintColor"
@@ -55,7 +55,7 @@ import { Component, Vue } from 'vue-property-decorator'
     EditToolDrawer: () => import('~/components/EditToolDrawer.vue'),
     AppFooter: () => import('~/components/Footer.vue'),
     Lisence: () => import('~/components/Lisence.vue'),
-    PaintToolDialog: () => import('~/components/PaintToolDialog.vue')
+    PaintToolPanel: () => import('~/components/PaintToolPanel.vue')
   },
   computed: {
     ...mapState('drawer', ['open']),
